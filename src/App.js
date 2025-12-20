@@ -63,9 +63,7 @@ export default function Portfolio() {
         <div 
           className="absolute inset-0 opacity-[0.015]"
           style={{
-            backgroundImage: `
-              radial-gradient(circle at 50% 50%, rgba(100, 150, 200, 0.1) 1px, transparent 1px)
-            `,
+            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(100, 150, 200, 0.1) 1px, transparent 1px)`,
             backgroundSize: '40px 40px',
             transform: `translate(${mousePos.x * 0.01}px, ${mousePos.y * 0.01}px)`
           }}
@@ -168,194 +166,215 @@ export default function Portfolio() {
         </div>
 
         {/* Containerized Content */}
-        <div 
-          className="border border-neutral-800 bg-neutral-900 p-8 md:p-12 relative group hover:border-neutral-700 transition-all duration-300"
-        >
-          {/* Subtle corner highlights */}
-          <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-slate-500/50 -translate-x-px -translate-y-px opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-slate-500/50 translate-x-px -translate-y-px opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="absolute bottom-0 left-0 w-4 h-4 border-l border-b border-slate-500/50 -translate-x-px translate-y-px opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="absolute bottom-0 right-0 w-4 h-4 border-r border-b border-slate-500/50 translate-x-px translate-y-px opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="relative group">
+          {/* Glowing border effect */}
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600 rounded-lg opacity-20 group-hover:opacity-40 blur transition-all duration-500" />
           
-          {/* Home Tab */}
-          {activeTab === 'home' && (
-            <div className="space-y-8">
-              <div>
-                <p className="text-lg text-neutral-400 mb-2">Computer Engineering Student</p>
-              </div>
-
-              <div className="space-y-3 text-neutral-300 leading-relaxed">
-                <p>Second-year Computer Engineering student at University of Toronto, passionate about applying machine learning and software engineering to solve industry problems.</p>
-              </div>
-
-              <div className="pt-4">
-                <h2 className="text-sm font-semibold text-neutral-500 mb-3 uppercase tracking-wider flex items-center gap-2">
-                  <BrainCircuit className="w-4 h-4 text-slate-400" />
-                  What I'm Working On
-                </h2>
-                <div className="space-y-2 text-neutral-300">
-                  <div className="flex items-start gap-2 group/item hover:text-white transition-colors">
-                    <span className="text-slate-400 mt-1">→</span>
-                    <span>developing motor intention recognition models with UTMIST for post-stroke rehabilitation</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <h2 className="text-sm font-semibold text-neutral-500 mb-3 uppercase tracking-wider flex items-center gap-2">
-                  <Cpu className="w-4 h-4 text-slate-400" />
-                  What I've Completed
-                </h2>
-                <div className="space-y-2 text-neutral-300">
-                  <div className="flex items-start gap-2 group/item hover:text-white transition-colors">
-                    <span className="text-slate-400 mt-1">→</span>
-                    <span>built sleep stage classifier with CNN-LSTM (73.6% accuracy, 12% improvement)</span>
-                  </div>
-                  <div className="flex items-start gap-2 group/item hover:text-white transition-colors">
-                    <span className="text-slate-400 mt-1">→</span>
-                    <span>developed personality trait prediction from fMRI data using CNNs</span>
-                  </div>
-                  <div className="flex items-start gap-2 group/item hover:text-white transition-colors">
-                    <span className="text-slate-400 mt-1">→</span>
-                    <span>won 2nd place at Hack Without Borders UofT with live text-to-speech tool</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-8 flex gap-6 text-sm">
-                <a href="#" className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
-                  GitHub <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-                <a href="#" className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
-                  LinkedIn <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-                <a href="mailto:karma.namgyal@mail.utoronto.ca" className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
-                  Email <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-              </div>
+          {/* Main container */}
+          <div className="relative border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-800 p-8 md:p-12 rounded-lg group-hover:border-neutral-700 transition-all duration-300 shadow-2xl">
+            {/* Inner glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-500/5 via-transparent to-transparent rounded-lg pointer-events-none" />
+            
+            {/* Subtle corner highlights with gradient */}
+            <div className="absolute top-0 left-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-slate-400/60 -translate-x-px -translate-y-px rounded-tl" />
+              <div className="absolute top-0 left-0 w-8 h-8 bg-gradient-to-br from-slate-400/10 to-transparent rounded-tl" />
             </div>
-          )}
+            <div className="absolute top-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-slate-400/60 translate-x-px -translate-y-px rounded-tr" />
+              <div className="absolute top-0 right-0 w-8 h-8 bg-gradient-to-bl from-slate-400/10 to-transparent rounded-tr" />
+            </div>
+            <div className="absolute bottom-0 left-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-slate-400/60 -translate-x-px translate-y-px rounded-bl" />
+              <div className="absolute bottom-0 left-0 w-8 h-8 bg-gradient-to-tr from-slate-400/10 to-transparent rounded-bl" />
+            </div>
+            <div className="absolute bottom-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-slate-400/60 translate-x-px translate-y-px rounded-br" />
+              <div className="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-tl from-slate-400/10 to-transparent rounded-br" />
+            </div>
+            
+            {/* Content wrapper */}
+            <div className="relative z-10">
+              {/* Home Tab */}
+              {activeTab === 'home' && (
+                <div className="space-y-8">
+                  <div>
+                    <p className="text-lg text-neutral-400 mb-2">Computer Engineering Student</p>
+                  </div>
 
-          {/* About Tab */}
-          {activeTab === 'about' && (
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-sm font-semibold text-neutral-500 mb-4 uppercase tracking-wider">About</h2>
-                <div className="space-y-4 text-neutral-300 leading-relaxed">
-                  <p>
-                    I'm a second-year Computer Engineering student at the University of Toronto (Class of 2029), passionate about applying machine learning and software engineering to solve industry problems.
-                  </p>
-                  <p>
-                    I enjoy working on projects at the intersection of AI and real-world applications, from healthcare to computer vision. I'm always looking for opportunities to learn new technologies and collaborate on challenging problems.
-                  </p>
-                  <p>
-                    Outside of academics, I'm a competitive athlete for UofT's varsity ultimate team and play summer club ultimate.
-                  </p>
-                </div>
-              </div>
+                  <div className="space-y-3 text-neutral-300 leading-relaxed">
+                    <p>Second-year Computer Engineering student at University of Toronto, passionate about applying machine learning and software engineering to solve industry problems.</p>
+                  </div>
 
-              <div className="pt-6">
-                <h2 className="text-sm font-semibold text-neutral-500 mb-4 uppercase tracking-wider">Experience</h2>
-                <div className="space-y-4">
-                  <div className="border-l-2 border-slate-500/50 pl-4 hover:border-slate-400 transition-colors">
-                    <div className="flex justify-between items-baseline mb-1">
-                      <div className="text-white font-medium">Machine Learning Engineer</div>
-                      <div className="text-neutral-500 text-sm">Sept 2024 – Present</div>
-                    </div>
-                    <div className="text-neutral-400 text-sm mb-2">University of Toronto Machine Intelligence Student Team (UTMIST)</div>
-                    <div className="text-neutral-300 text-sm leading-relaxed">
-                      Neurorehabilitation device for post-stroke recovery. See projects.
+                  <div className="pt-4">
+                    <h2 className="text-sm font-semibold text-neutral-500 mb-3 uppercase tracking-wider flex items-center gap-2">
+                      <BrainCircuit className="w-4 h-4 text-slate-400" />
+                      What I'm Working On
+                    </h2>
+                    <div className="space-y-2 text-neutral-300">
+                      <div className="flex items-start gap-2 group/item hover:text-white transition-colors">
+                        <span className="text-slate-400 mt-1">→</span>
+                        <span>developing motor intention recognition models with UTMIST for post-stroke rehabilitation</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="pt-6">
-                <h2 className="text-sm font-semibold text-neutral-500 mb-4 uppercase tracking-wider">Technical Skills</h2>
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="group/skill">
-                    <div className="text-neutral-400 mb-2 text-sm group-hover/skill:text-slate-300 transition-colors">Languages</div>
-                    <div className="text-neutral-300 text-sm">Python, C, C++, MATLAB</div>
-                  </div>
-                  <div className="group/skill">
-                    <div className="text-neutral-400 mb-2 text-sm group-hover/skill:text-slate-300 transition-colors">ML & Data Science</div>
-                    <div className="text-neutral-300 text-sm">PyTorch, NumPy, scikit-learn, pandas</div>
-                  </div>
-                  <div className="group/skill">
-                    <div className="text-neutral-400 mb-2 text-sm group-hover/skill:text-slate-300 transition-colors">Developer Tools</div>
-                    <div className="text-neutral-300 text-sm">Git, Jupyter, VS Code, Streamlit</div>
-                  </div>
-                  <div className="group/skill">
-                    <div className="text-neutral-400 mb-2 text-sm group-hover/skill:text-slate-300 transition-colors">Specializations</div>
-                    <div className="text-neutral-300 text-sm">Deep Learning, Signal Processing</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-6">
-                <h2 className="text-sm font-semibold text-neutral-500 mb-4 uppercase tracking-wider">Education</h2>
-                <div className="space-y-1 border-l-2 border-slate-500/50 pl-4 hover:border-slate-400 transition-colors">
-                  <div className="text-white">University of Toronto</div>
-                  <div className="text-neutral-400">BASc in Computer Engineering + PEY Co-op, 2024-2029</div>
-                  <div className="text-neutral-500 text-sm">Deep Learning, Programming Fundamentals, Software Design, Digital Systems, Linear Algebra</div>
-                </div>
-              </div>
-
-              <div className="pt-6">
-                <a href="#" className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 text-sm group">
-                  Download Resume <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-              </div>
-            </div>
-          )}
-
-          {/* Projects Tab */}
-          {activeTab === 'projects' && (
-            <div className="space-y-10">
-              {projects.map((project, idx) => (
-                <div key={idx} className="space-y-3 pb-10 border-b border-neutral-800 last:border-0 last:pb-0 group/project">
-                  <div className="flex items-baseline justify-between">
-                    <h3 className="text-xl font-semibold group-hover/project:text-slate-300 transition-colors">{project.title}</h3>
-                    <span className="text-sm text-neutral-500">{project.year}</span>
-                  </div>
-                  
-                  <p className="text-neutral-400 leading-relaxed group-hover/project:text-neutral-300 transition-colors">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {project.tags.map((tag, i) => (
-                      <span key={i} className="text-xs text-neutral-500 border border-neutral-800 px-2 py-1 hover:border-slate-600 hover:text-neutral-300 transition-colors">
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="pt-4">
+                    <h2 className="text-sm font-semibold text-neutral-500 mb-3 uppercase tracking-wider flex items-center gap-2">
+                      <Cpu className="w-4 h-4 text-slate-400" />
+                      What I've Completed
+                    </h2>
+                    <div className="space-y-2 text-neutral-300">
+                      <div className="flex items-start gap-2 group/item hover:text-white transition-colors">
+                        <span className="text-slate-400 mt-1">→</span>
+                        <span>built sleep stage classifier with CNN-LSTM (73.6% accuracy, 12% improvement)</span>
+                      </div>
+                      <div className="flex items-start gap-2 group/item hover:text-white transition-colors">
+                        <span className="text-slate-400 mt-1">→</span>
+                        <span>developed personality trait prediction from fMRI data using CNNs</span>
+                      </div>
+                      <div className="flex items-start gap-2 group/item hover:text-white transition-colors">
+                        <span className="text-slate-400 mt-1">→</span>
+                        <span>won 2nd place at Hack Without Borders UofT with live text-to-speech tool</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="flex gap-4 text-sm pt-3">
-                    <a href={project.github} className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
+                  <div className="pt-8 flex gap-6 text-sm">
+                    <a href="https://github.com/karnamgyal" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
                       GitHub <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>
-                    {project.paper && (
-                      <a href={project.paper} className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
-                        Paper <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </a>
-                    )}
-                    {project.writeup && (
-                      <a href={project.writeup} className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
-                        Writeup <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </a>
-                    )}
+                    <a href="https://www.linkedin.com/in/karma-namgyal/" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
+                      LinkedIn <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+                    <a href="mailto:karma.namgyal@mail.utoronto.ca" className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
+                      Email <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              )}
 
+              {/* About Tab */}
+              {activeTab === 'about' && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-sm font-semibold text-neutral-500 mb-4 uppercase tracking-wider">About</h2>
+                    <div className="space-y-4 text-neutral-300 leading-relaxed">
+                      <p>
+                        I'm a second-year Computer Engineering student at the University of Toronto (Class of 2029), passionate about applying machine learning and software engineering to solve industry problems.
+                      </p>
+                      <p>
+                        I enjoy working on projects at the intersection of AI and real-world applications, from healthcare to computer vision. I'm always looking for opportunities to learn new technologies and collaborate on challenging problems.
+                      </p>
+                      <p>
+                        Outside of academics, I'm a competitive athlete for UofT's varsity ultimate team and play summer club ultimate.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-6">
+                    <h2 className="text-sm font-semibold text-neutral-500 mb-4 uppercase tracking-wider">Experience</h2>
+                    <div className="space-y-4">
+                      <div className="border-l-2 border-slate-500/50 pl-4 hover:border-slate-400 transition-colors">
+                        <div className="flex justify-between items-baseline mb-1">
+                          <div className="text-white font-medium">Machine Learning Engineer</div>
+                          <div className="text-neutral-500 text-sm">Sept 2024 – Present</div>
+                        </div>
+                        <div className="text-neutral-400 text-sm mb-2">University of Toronto Machine Intelligence Student Team (UTMIST)</div>
+                        <div className="text-neutral-300 text-sm leading-relaxed">
+                          Neurorehabilitation device for post-stroke recovery. See projects.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6">
+                    <h2 className="text-sm font-semibold text-neutral-500 mb-4 uppercase tracking-wider">Technical Skills</h2>
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="group/skill">
+                        <div className="text-neutral-400 mb-2 text-sm group-hover/skill:text-slate-300 transition-colors">Languages</div>
+                        <div className="text-neutral-300 text-sm">Python, C, C++, MATLAB</div>
+                      </div>
+                      <div className="group/skill">
+                        <div className="text-neutral-400 mb-2 text-sm group-hover/skill:text-slate-300 transition-colors">ML & Data Science</div>
+                        <div className="text-neutral-300 text-sm">PyTorch, NumPy, scikit-learn, pandas</div>
+                      </div>
+                      <div className="group/skill">
+                        <div className="text-neutral-400 mb-2 text-sm group-hover/skill:text-slate-300 transition-colors">Developer Tools</div>
+                        <div className="text-neutral-300 text-sm">Git, Jupyter, VS Code, Streamlit</div>
+                      </div>
+                      <div className="group/skill">
+                        <div className="text-neutral-400 mb-2 text-sm group-hover/skill:text-slate-300 transition-colors">Specializations</div>
+                        <div className="text-neutral-300 text-sm">Deep Learning, Signal Processing</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6">
+                    <h2 className="text-sm font-semibold text-neutral-500 mb-4 uppercase tracking-wider">Education</h2>
+                    <div className="space-y-1 border-l-2 border-slate-500/50 pl-4 hover:border-slate-400 transition-colors">
+                      <div className="text-white">University of Toronto</div>
+                      <div className="text-neutral-400">BASc in Computer Engineering + PEY Co-op, 2024-2029</div>
+                      <div className="text-neutral-500 text-sm">Deep Learning, Programming Fundamentals, Software Design, Digital Systems, Linear Algebra</div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6">
+                    <a href="#" className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 text-sm group">
+                      Download Resume <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>
+                </div>
+              )}
+
+              {/* Projects Tab */}
+              {activeTab === 'projects' && (
+                <div className="space-y-10">
+                  {projects.map((project, idx) => (
+                    <div key={idx} className="space-y-3 pb-10 border-b border-neutral-800 last:border-0 last:pb-0 group/project">
+                      <div className="flex items-baseline justify-between">
+                        <h3 className="text-xl font-semibold group-hover/project:text-slate-300 transition-colors">{project.title}</h3>
+                        <span className="text-sm text-neutral-500">{project.year}</span>
+                      </div>
+                      
+                      <p className="text-neutral-400 leading-relaxed group-hover/project:text-neutral-300 transition-colors">
+                        {project.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {project.tags.map((tag, i) => (
+                          <span key={i} className="text-xs text-neutral-500 border border-neutral-800 px-2 py-1 hover:border-slate-600 hover:text-neutral-300 transition-colors">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex gap-4 text-sm pt-3">
+                        <a href={project.github} className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
+                          GitHub <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </a>
+                        {project.paper && (
+                          <a href={project.paper} className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
+                            Paper <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </a>
+                        )}
+                        {project.writeup && (
+                          <a href={project.writeup} className="text-neutral-400 hover:text-slate-300 transition-colors flex items-center gap-1 group">
+                            Writeup <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Footer */}
         <div className="mt-8 text-sm text-neutral-600">
-          © 2024 Karma Namgyal
+          © 2025 Karma Namgyal
         </div>
       </div>
     </div>
