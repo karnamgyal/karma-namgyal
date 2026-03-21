@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karma Namgyal</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #fff;
+        color: #111;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.75;
+        max-width: 580px;
+        margin: 0 auto;
+        padding: 80px 24px;
+      }
+      a {
+        color: #111;
+        text-underline-offset: 3px;
+      }
+      a:hover {
+        color: #888;
+      }
+      h1 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+      .intro {
+        color: #333;
+        margin-bottom: 6px;
+      }
+      .block {
+        margin-top: 32px;
+      }
+      .label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 15px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      ul li {
+        color: #333;
+        margin-bottom: 4px;
+        padding-left: 14px;
+        position: relative;
+      }
+      ul li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: #ccc;
+      }
+      .muted {
+        color: #999;
+        font-size: 13px;
+        margin-top: 4px;
+      }
+      .icon-links {
+        display: flex;
+        gap: 14px;
+        margin-top: 8px;
+      }
+      .icon-links a {
+        color: #555;
+        display: flex;
+        align-items: center;
+        transition: color 0.15s;
+      }
+      .icon-links a:hover {
+        color: #111;
+      }
+      .icon-links svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      body.dark {
+        background: #111;
+        color: #eee;
+      }
+      body.dark a {
+        color: #eee;
+      }
+      body.dark a:hover {
+        color: #888;
+      }
+      body.dark .intro {
+        color: #bbb;
+      }
+      body.dark ul li {
+        color: #bbb;
+      }
+      body.dark ul li::before {
+        color: #444;
+      }
+      body.dark .muted {
+        color: #666;
+      }
+      body.dark .label {
+        color: #eee;
+      }
+      body.dark .icon-links a {
+        color: #888;
+      }
+      body.dark .icon-links a:hover {
+        color: #eee;
+      }
+      .top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 20px;
+      }
+      .top-row h1 {
+        margin-bottom: 0;
+      }
+      .toggle {
+        background: none;
+        border: 1px solid #ddd;
+        border-radius: 100px;
+        padding: 4px 10px;
+        font-size: 12px;
+        color: #888;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.15s;
+      }
+      .toggle:hover {
+        color: #111;
+        border-color: #999;
+      }
+      body.dark .top-row .toggle {
+        border-color: #444;
+        color: #666;
+      }
+      body.dark .top-row .toggle:hover {
+        color: #eee;
+        border-color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-row">
+      <h1>hi, I'm Karma.</h1>
+      <button class="toggle" onclick="toggleDark()" id="tog">dark</button>
+    </div>
+
+    <p class="intro">
+      I enjoy building software and end-to-end machine learning systems.
+    </p>
+    <p class="intro">
+      I play competitive and varsity ultimate frisbee, and love training to get
+      better.
+    </p>
+
+    <div class="block">
+      <div class="label">upcoming</div>
+      <ul>
+        <li>
+          ML Researcher —
+          <a href="https://kcnhub.com" target="_blank"
+            >Krembil Brain Institute</a
+          >
+          <div class="muted">Summer 2025</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="label">current</div>
+      <ul>
+        <li>
+          ML Engineer — <a href="https://utmist.ca" target="_blank">UTMIST</a>
+          <div class="muted">
+            Building pipelines for post-stroke rehabilitation hardware
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="label">education</div>
+      <ul>
+        <li>
+          BASc Computer Engineering + PEY Co-op —
+          <a href="https://www.utoronto.ca" target="_blank"
+            >University of Toronto</a
+          >
+          <div class="muted">2024 – 2029</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="label">quote</div>
+      <ul>
+        <li>"Never compare yourself to others" — unknown</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="icon-links">
+        <a href="https://github.com/karnamgyal" target="_blank" title="GitHub">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://linkedin.com/in/karma-namgyal"
+          target="_blank"
+          title="LinkedIn"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+            />
+            <rect x="2" y="9" width="4" height="12" />
+            <circle cx="4" cy="4" r="2" />
+          </svg>
+        </a>
+        <a
+          href="https://devpost.com/karnamgyal"
+          target="_blank"
+          title="Devpost"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <path
+              d="M6.002 1.61L0 12.004 6.002 22.39h11.996L24 12.004 17.998 1.61zm1.593 4.084h4.811c3.173 0 5.51 2.265 5.51 6.31 0 4.045-2.337 6.31-5.51 6.31H7.595V5.694zm2.307 2.13v8.36h2.504c1.975 0 3.203-1.317 3.203-4.18 0-2.862-1.228-4.18-3.203-4.18H9.902z"
+            />
+          </svg>
+        </a>
+        <a href="mailto:karma.namgyal@mail.utoronto.ca" title="Email">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+            />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      function toggleDark() {
+        document.body.classList.toggle("dark");
+        document.getElementById("tog").textContent =
+          document.body.classList.contains("dark") ? "light" : "dark";
+      }
+    </script>
+  </body>
+</html>
