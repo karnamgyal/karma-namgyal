@@ -128,35 +128,62 @@
       .top-row h1 {
         margin-bottom: 0;
       }
-      .toggle {
-        background: none;
+      .seg {
+        display: flex;
         border: 1px solid #ddd;
         border-radius: 100px;
-        padding: 4px 10px;
+        overflow: hidden;
+      }
+      .seg-btn {
+        background: none;
+        border: none;
+        border-left: 1px solid #ddd;
+        padding: 4px 14px;
         font-size: 12px;
         color: #888;
         cursor: pointer;
         font-family: inherit;
         transition: all 0.15s;
+        text-decoration: none;
+        display: inline-block;
+        white-space: nowrap;
       }
-      .toggle:hover {
+      .seg-btn:first-child {
+        border-left: none;
+      }
+      .seg-btn:hover {
         color: #111;
-        border-color: #999;
+        background: #f5f5f5;
       }
-      body.dark .top-row .toggle {
-        border-color: #444;
+      .seg-btn.active {
+        color: #111;
+        background: #f3f3f3;
+      }
+      body.dark .top-row .seg {
+        border-color: #333;
+      }
+      body.dark .top-row .seg-btn {
         color: #666;
+        border-left-color: #333;
       }
-      body.dark .top-row .toggle:hover {
+      body.dark .top-row .seg-btn:hover {
         color: #eee;
-        border-color: #888;
+        background: #1e1e1e;
+      }
+      body.dark .top-row .seg-btn.active {
+        color: #eee;
+        background: #202020;
       }
     </style>
   </head>
   <body>
     <div class="top-row">
       <h1>hi, I'm Karma.</h1>
-      <button class="toggle" onclick="toggleDark()" id="tog">dark</button>
+      <div class="seg">
+        <a class="seg-btn active" href="./index.html">home</a>
+        <a class="seg-btn" href="./projects.html">projects</a>
+        <button class="seg-btn" onclick="toggleDark()" id="tog">dark</button>
+      </div>
     </div>
 
     <p class="intro">
@@ -276,13 +303,30 @@
         </a>
       </div>
     </div>
-
     <script>
-      function toggleDark() {
-        document.body.classList.toggle("dark");
+      const THEME_KEY = "karma-theme";
+
+      function syncThemeToggle() {
         document.getElementById("tog").textContent =
           document.body.classList.contains("dark") ? "light" : "dark";
       }
-    </script>
-  </body>
+
+      function applySavedTheme() {
+        if (localStorage.getItem(THEME_KEY) === "dark") {
+          document.body.classList.add("dark");
+        }
+        syncThemeToggle();
+      }
+
+      function toggleDark() {
+        document.body.classList.toggle("dark");
+        localStorage.setItem(
+          THEME_KEY,
+          document.body.classList.contains("dark") ? "dark" : "light",
+        );
+        syncThemeToggle();
+      }
+
+      applySavedTheme();
+    </script>  </body>
 </html>
