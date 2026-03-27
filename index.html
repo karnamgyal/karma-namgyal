@@ -83,9 +83,23 @@
       .icon-links a:hover {
         color: #111;
       }
-      .icon-links svg {
+            .icon-links svg {
         width: 18px;
         height: 18px;
+      }
+      .footer-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 32px;
+      }
+      .footer-row .icon-links {
+        margin-top: 0;
+      }
+      .copyright {
+        color: #999;
+        font-size: 12px;
+        font-family: inherit;
       }
 
       body.dark {
@@ -174,7 +188,7 @@
         color: #eee;
         background: #202020;
       }
-    </style>
+</style>
   </head>
   <body>
     <div class="top-row">
@@ -240,7 +254,7 @@
       </ul>
     </div>
 
-    <div class="block">
+        <div class="block footer-row">
       <div class="icon-links">
         <a href="https://github.com/karnamgyal" target="_blank" title="GitHub">
           <svg
@@ -303,7 +317,9 @@
           </svg>
         </a>
       </div>
+      <div class="copyright">&copy; Karma Namgyal</div>
     </div>
+
     <script>
       const THEME_KEY = "karma-theme";
 
