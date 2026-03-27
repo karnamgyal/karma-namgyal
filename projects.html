@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projects — Karma Namgyal</title>
+<title>Karma Namgyal</title>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -57,6 +57,7 @@ body.dark .card-meta{color:#555;}
   <div class="seg">
     <a href="./index.html" class="seg-btn">home</a>
     <a href="./projects.html" class="seg-btn active">projects</a>
+
     <button class="seg-btn" onclick="toggleDark()" id="tog">dark</button>
   </div>
 </div>
@@ -72,9 +73,12 @@ body.dark .card-meta{color:#555;}
           <a href="https://github.com/karnamgyal" target="_blank">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
           </a>
+          <a href="https://www.notion.so/Sleep-Stage-Classification-from-Full-Day-Night-EEG-EOG-EMG-Recordings-Using-CNN-LSTM-24d209af64a980bba7afccb8298b46ed" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M9 16V8l6 8V8"></path></svg>
+          </a>
         </div>
       </div>
-      <div class="card-desc">A deep learning pipeline that classifies sleep stages from multi-channel biosignals and processes full-day recordings for 40+ patients.</div>
+      <div class="card-desc">A deep CNN-LSTM pipeline that classifies sleep stages from multi-channel biosignals and processes full-day recordings for 40+ patients.</div>
       
     </div>
   </div>
@@ -88,9 +92,12 @@ body.dark .card-meta{color:#555;}
           <a href="https://github.com/karnamgyal" target="_blank">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
           </a>
+          <a href="https://www.notion.so/Personality-Trait-Regression-from-MRI-Connectivity-Matrices-Using-2D-CNN-24d209af64a98012bc7cd0c745e8c9a4" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M9 16V8l6 8V8"></path></svg>
+          </a>
         </div>
       </div>
-      <div class="card-desc">A deep learning pipeline that predicts NEO-FFI personality traits from resting-state fMRI connectivity data across 1,200 participants, for APS360.</div>
+      <div class="card-desc">A deep CNN pipeline that predicts NEO-FFI personality traits from resting-state fMRI connectivity data across 1,200 participants, for APS360.</div>
       
     </div>
   </div>
@@ -244,10 +251,10 @@ function drawVerbatim(c,t){
   ctx.font='11px system-ui';
   lines.forEach((line,i)=>{
     const ly=fy+fh*.25+i*18,hl=Math.abs(scanY-ly)<12;
-    ctx.fillStyle=hl?(dk()?'rgba(180,140,60,0.9)':'rgba(138,96,32,0.85)'):(dk()?'rgba(200,195,185,0.25)':'rgba(60,55,50,0.25)');
+    ctx.fillStyle=hl?(dk()?'rgba(180,140,60,0.95)':'rgba(138,96,32,0.85)'):(dk()?'rgba(230,225,215,0.52)':'rgba(60,55,50,0.25)');
     ctx.fillText(line,fx+10,ly);
   });
-  ctx.fillStyle=dk()?'rgba(155,149,144,0.35)':'rgba(60,55,50,0.3)';
+  ctx.fillStyle=dk()?'rgba(210,205,195,0.7)':'rgba(60,55,50,0.3)';
   ctx.font='9px system-ui';ctx.textAlign='center';
   ctx.fillText('reading text aloud in real time',W/2,fy+fh+16);
   ctx.textAlign='left';
