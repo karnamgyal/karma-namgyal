@@ -173,6 +173,11 @@
         color: #111;
         background: #f3f3f3;
       }
+      .theme-toggle {
+        min-width: 40px;
+        text-align: center;
+        font-size: 14px;
+      }
       body.dark .top-row .seg {
         border-color: #333;
       }
@@ -197,7 +202,15 @@
         <a class="seg-btn active" href="./index.html">home</a>
         <a class="seg-btn" href="./projects.html">projects</a>
 
-        <button class="seg-btn" onclick="toggleDark()" id="tog">dark</button>
+        <button
+          class="seg-btn theme-toggle"
+          onclick="toggleDark()"
+          id="tog"
+          aria-label="Toggle theme"
+          title="Toggle theme"
+        >
+          ☾
+        </button>
       </div>
     </div>
 
@@ -324,8 +337,17 @@
       const THEME_KEY = "karma-theme";
 
       function syncThemeToggle() {
-        document.getElementById("tog").textContent =
-          document.body.classList.contains("dark") ? "light" : "dark";
+        const toggle = document.getElementById("tog");
+        const isDark = document.body.classList.contains("dark");
+        toggle.textContent = isDark ? "☀" : "☾";
+        toggle.setAttribute(
+          "aria-label",
+          isDark ? "Switch to light mode" : "Switch to dark mode",
+        );
+        toggle.setAttribute(
+          "title",
+          isDark ? "Switch to light mode" : "Switch to dark mode",
+        );
       }
 
       function applySavedTheme() {
