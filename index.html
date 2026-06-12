@@ -40,6 +40,26 @@
         color: #252525;
         margin-bottom: 6px;
       }
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 168px;
+        gap: 32px;
+        align-items: start;
+      }
+      .profile-photo-link {
+        display: block;
+      }
+      .profile-photo {
+        display: block;
+        width: 168px;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        object-fit: cover;
+        filter: grayscale(100%);
+      }
+      .profile-photo-link:hover .profile-photo {
+        filter: grayscale(60%);
+      }
       .block {
         margin-top: 32px;
       }
@@ -114,6 +134,9 @@
       }
       body.dark .intro {
         color: #bbb;
+      }
+      body.dark .profile-photo {
+        opacity: 0.88;
       }
       body.dark ul li {
         color: #bbb;
@@ -193,6 +216,15 @@
         color: #eee;
         background: #202020;
       }
+      @media (max-width: 560px) {
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+        .profile-photo {
+          width: 132px;
+        }
+      }
 </style>
   </head>
   <body>
@@ -214,20 +246,35 @@
       </div>
     </div>
 
-    <ul class="intro">
-      <li>
-        I'm an ECE student who's really into machine learning systems and using
-        AI to build cool stuff.
-      </li>
-      <li>
-        For fun, I love to play competitive Ultimate Frisbee and train/work out
-        for it.
-      </li>
-      <li>
-        Looking to meet more people in the tech community, so feel free to reach
-        out for anything.
-      </li>
-    </ul>
+    <div class="hero">
+      <ul class="intro">
+        <li>
+          I'm an ECE student who's really into machine learning systems and using
+          AI to build cool stuff.
+        </li>
+        <li>
+          For fun, I love to play competitive Ultimate Frisbee and train/work out
+          for it.
+        </li>
+        <li>
+          Looking to meet more people in the tech community, so feel free to reach
+          out for anything.
+        </li>
+      </ul>
+      <a
+        class="profile-photo-link"
+        href="https://kcnhub.com/members/research-personnel#undergraduates"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Open KCNHub research personnel"
+      >
+        <img
+          class="profile-photo"
+          src="https://kcnhub.com/Assets/photos/Karma_Namgyal.png"
+          alt="Karma Namgyal"
+        />
+      </a>
+    </div>
 
     <div class="block">
       <div class="label">current</div>
