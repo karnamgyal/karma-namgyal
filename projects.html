@@ -130,15 +130,19 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 12px;
         margin-bottom: 6px;
       }
       .card-title {
+        flex: 1;
         font-size: 20px;
         font-weight: 600;
         letter-spacing: -0.02em;
+        line-height: 1.25;
       }
       .card-icons {
         display: flex;
+        flex-shrink: 0;
         gap: 10px;
       }
       .card-icons a {
@@ -261,6 +265,55 @@
     </div>
 
     <div class="cards">
+      <div class="card">
+        <div class="card-preview">
+          <img
+            class="photo-preview"
+            src="./assets/starglazers.jpeg"
+            alt="Starglazers light-pollution map interface"
+          />
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <div class="card-title">Starglazers - 2nd @ Ignition Hacks 2026</div>
+            <div class="card-icons">
+              <a
+                href="https://github.com/karnamgyal/starry-night"
+                target="_blank"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                  />
+                </svg>
+              </a>
+              <a
+                href="https://hack-hub-base44.base44.app/SubmissionDetail?id=6a8a1e07e2ba53fa86961680"
+                target="_blank"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <path
+                    d="M6.002 1.61L0 12.004 6.002 22.39h11.996L24 12.004 17.998 1.61zm1.593 4.084h4.811c3.173 0 5.51 2.265 5.51 6.31 0 4.045-2.337 6.31-5.51 6.31H7.595V5.694zm2.307 2.13v8.36h2.504c1.975 0 3.203-1.317 3.203-4.18 0-2.862-1.228-4.18-3.203-4.18H9.902z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="card-desc">
+            An environmental-track 2D/3D map exploring Toronto light pollution
+            with satellite data, glow hotspots, YOLO analysis, and retrofit
+            savings.
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-preview card-preview-waveform">
           <img
@@ -404,7 +457,7 @@
           <div class="card-desc">
             A VS Code extension that uses webcam-based computer vision to
             respond to your emotional state while coding, and it was built for
-            Ignition Hacks 2026.
+            Ignition Hacks 2025.
           </div>
         </div>
       </div>
@@ -419,7 +472,7 @@
         </div>
         <div class="card-body">
           <div class="card-title-row">
-            <div class="card-title">Verbatim</div>
+            <div class="card-title">Verbatim - 2nd @ Hack Without Borders 2026</div>
             <div class="card-icons">
               <a href="https://github.com/karnamgyal" target="_blank">
                 <svg
@@ -449,7 +502,7 @@
           </div>
           <div class="card-desc">
             A Python app that uses computer vision to read text aloud from your
-            webcam in real time, and it placed 2nd at Hack Without Borders 2026.
+            webcam in real time.
           </div>
         </div>
       </div>
