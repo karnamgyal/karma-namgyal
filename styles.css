@@ -218,6 +218,16 @@ a:hover {
 .rows {
   list-style: none;
 }
+.row {
+  position: relative;
+  padding-left: 18px;
+}
+.row::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--faint);
+}
 .row + .row {
   margin-top: 14px;
 }
