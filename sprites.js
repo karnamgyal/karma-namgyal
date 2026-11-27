@@ -1,23 +1,19 @@
-// Sprites drifting behind the page: elemental wisps, a moonwalking
-// dancer, a frisbee, and a bulldog that chases it.
+// Sprites wandering behind the page: a water wisp, a moonwalking dancer,
+// a frisbee with a bulldog chasing it, and a blocky avatar.
 (function () {
   // ------------------------------------------------------------------
-  // Use your own sprite images:
+  // Add your own sprite images:
   //   1. Put PNGs with transparent backgrounds in assets/sprites/
-  //   2. List them below, e.g. ["./assets/sprites/water.png", ...]
-  // When this list has images, they replace the built-in sprites.
+  //   2. List them below, e.g. ["./assets/sprites/slurp.png", ...]
+  // Each listed image joins the built-in sprites below.
   var CUSTOM_IMAGES = [];
   var CUSTOM_HEIGHT = 56; // display height in px on desktop (phones: 2/3)
   // ------------------------------------------------------------------
 
   // Pixel art: one palette letter per pixel, "." is transparent.
-  var WISP = {
-    e: "#fffbe6", E: "#fff3c4", w: "#ffffff",
-    r: "#e0603e", o: "#f09a3a", y: "#f6d36b", R: "#7a2e1f", O: "#8a5a1a", // ember, storm
-    c: "#5aa7d6", C: "#a9d6ef", D: "#3a7bb0", Q: "#1f4466",               // tide
-    x: "#3d2c63", X: "#2a1f47", u: "#9b86d6", Z: "#17112a",               // void
-    n: "#5fae93", N: "#3f8670", l: "#bfe8d8", K: "#1f4a3d",               // shard
-    i: "#bfe3ef", I: "#8cc3d6", F: "#3f6f80",                             // frost
+  var TIDE = {
+    e: "#fffbe6", E: "#fff3c4",
+    c: "#5aa7d6", C: "#a9d6ef", D: "#3a7bb0", Q: "#1f4466",
   };
   var DANCER = {
     h: "#2b2b30", b: "#e9e9e9", H: "#2a1d17", s: "#c48d68", S: "#a26f4e",
@@ -29,36 +25,15 @@
     c: "#5aa7d6", a: "#1b1716", A: "#1b1716",
   };
   var DISC = { k: "#3a3f47", z: "#f3f3f0", Z: "#c8d6e6", v: "#3a7bb0", w: "#ffffff" };
+  var AVATAR = {
+    k: "#26262b", s: "#c48d68", H: "#1f1a17", g: "#8d8f96", G: "#74767d",
+    w: "#f1f1f1", j: "#3d4f6b", a: "#1b1716", A: "#1b1716",
+  };
 
   var SPRITES = {
-    ember: {
-      kind: "wisp",
-      trail: "o",
-      blink: { e: "o", E: "o" },
-      poses: [
-        [
-          "..........R.....",
-          ".........RrR....",
-          "........RrrR....",
-          ".......RrrrR....",
-          "...R..RrrrrR....",
-          "..RrR.RrrrrR....",
-          ".RrrRRrrrrrR....",
-          ".RrrrroooorrR...",
-          ".RrrroooooorR...",
-          "..RroooyyoooR...",
-          "..RrooeyyyeorR..",
-          "..RrooEyyyEorR..",
-          "..RrooyyyyoorR..",
-          "...RroyyyyorR...",
-          "....RroyyorR....",
-          ".....RRrrRR.....",
-          ".......RR.......",
-        ],
-      ],
-    },
     tide: {
       kind: "wisp",
+      pal: TIDE,
       trail: "C",
       blink: { e: "c", E: "c" },
       poses: [
@@ -80,111 +55,6 @@
           "....QcDDDDDDQ...",
           ".....QQDDDQQ....",
           ".......QQQ......",
-        ],
-      ],
-    },
-    void: {
-      kind: "wisp",
-      trail: "u",
-      blink: { e: "x", E: "x" },
-      poses: [
-        [
-          "..................",
-          "..................",
-          "..................",
-          "......ZZZZZ.......",
-          ".ZZ..ZxxxxxZ......",
-          "ZuuZZuuxxxxxZ.....",
-          "ZuZZxxxxuxxxxZ....",
-          ".ZuZxxxxxxuxxZ....",
-          "..ZuxxxexxexuZ....",
-          "...ZxxxExxExXuZ...",
-          "...ZxxxxxxXXXZuZ..",
-          "...ZxxxxXXXXXZZuZ.",
-          "....ZxXXXXXXZZuuZ.",
-          ".....ZXXXXXZ..ZZ..",
-          "......ZZZZZ.......",
-          "..................",
-          "..................",
-          "..................",
-        ],
-      ],
-    },
-    shard: {
-      kind: "wisp",
-      trail: "l",
-      blink: { e: "n", E: "n" },
-      poses: [
-        [
-          "........K.........",
-          ".......KnK........",
-          "......KnnNK.......",
-          ".....KnnnNNK......",
-          ".....KlnnNNK...K..",
-          ".K...KlnnNNK..KNK.",
-          "KnK..KlnnNNK.KNNK.",
-          "KnnK.KlnnNNKKnNNK.",
-          "KnnNKKlnnNNKKnNNK.",
-          "KnnNKKlenNeKKnNNK.",
-          "KnnNKKnEnNEKKnNNK.",
-          "KnnNKKnnnNNKKnNNK.",
-          "KnnNKKnnnNNKKnNNK.",
-          "KnnNKKnnnNNKKnNNK.",
-          "KnnNKKnnnNNKKnNNK.",
-          ".KnNKKnnnNNKKnNNK.",
-          "..KK..KKKKK..KKK..",
-        ],
-      ],
-    },
-    storm: {
-      kind: "wisp",
-      trail: "y",
-      blink: { e: "y", E: "y" },
-      poses: [
-        [
-          "........O........",
-          ".......OoO.......",
-          ".......OoO.......",
-          "......OOoOO......",
-          ".....OoyyyoO.....",
-          "....OyyyyyyyO....",
-          "...OoywwwyyyoO...",
-          ".OOOyywwwyyyyOOO.",
-          "OoooyyweyyeyyoooO",
-          ".OOOyyyEyyEyyOOO.",
-          "...OoyyyyyyyoO...",
-          "....OyyyyyyyO....",
-          ".....OoyyyoO.....",
-          "......OOoOO......",
-          ".......OoO.......",
-          ".......OoO.......",
-          "........O........",
-        ],
-      ],
-    },
-    frost: {
-      kind: "wisp",
-      trail: "w",
-      blink: { e: "i", E: "i" },
-      poses: [
-        [
-          ".......FiF.......",
-          ".......FiF.......",
-          ".......FiF.......",
-          ".FF....FiF....FF.",
-          "FiiFF.FiiiF.FFiIF",
-          ".FiiiFiwiiiFiiIF.",
-          "..FFiiwwwiiiiFF..",
-          "...FiiiwiiiiIF...",
-          "...FiiieiieIIF...",
-          "...FiiiEiiEIIF...",
-          "..FFiiiiiIIIIFF..",
-          ".FiiiFiiIIIFIIIF.",
-          "FiiFF.FIIIF.FFIIF",
-          ".FF....FIF....FF.",
-          ".......FIF.......",
-          ".......FIF.......",
-          ".......FIF.......",
         ],
       ],
     },
@@ -314,8 +184,60 @@
         ],
       ],
     },
+    avatar: {
+      kind: "walker",
+      pal: AVATAR,
+      fps: 5,
+      blink: { a: "s", A: "s" },
+      poses: [
+        [
+          "....kkkkkkkk....",
+          "...kHHHHHHHHk...",
+          "...kHHHHHHHHk...",
+          "...kHssssssHk...",
+          "...kHsassassk...",
+          "...kssAssAssk...",
+          ".kkkssssssssk...",
+          "kgggggwggwgggkk.",
+          "kgggggwggwgggggk",
+          "kggggggggggggggk",
+          "kggggGGGGGGggggk",
+          "kssggGGGGGGggggk",
+          ".kkgjjjggjjjgssk",
+          "...kjjjkkjjjkkk.",
+          "...kjjjkkjjjk...",
+          "...kjjjkkjjjk...",
+          "...kjjjkkwwwk...",
+          "...kwwwk.kkk....",
+          "....kkk.........",
+          "................",
+        ],
+        [
+          "....kkkkkkkk....",
+          "...kHHHHHHHHk...",
+          "...kHHHHHHHHk...",
+          "...kHssssssHk...",
+          "...kHsassassk...",
+          "...kssAssAssk...",
+          "...ksssssssskkk.",
+          ".kkgggwggwgggggk",
+          "kgggggwggwgggggk",
+          "kggggggggggggggk",
+          "kggggGGGGGGggggk",
+          "kggggGGGGGGggssk",
+          "kssgjjjggjjjgkk.",
+          ".kkkjjjkkjjjk...",
+          "...kjjjkkjjjk...",
+          "...kjjjkkjjjk...",
+          "...kwwwkkjjjk...",
+          "....kkk.kwwwk...",
+          ".........kkk....",
+          "................",
+        ],
+      ],
+    },
   };
-  var WISP_NAMES = ["ember", "tide", "void", "shard", "storm", "frost"];
+  var CAST = ["dancer", "frisbee", "dog", "avatar", "tide"];
 
   var root = document.documentElement;
   var reduceMotion =
@@ -330,8 +252,8 @@
 
   var W = 0, H = 0, dpr = 1, px = 0;
   var colL = 0, colR = 0, narrow = false;
-  var kinds = {};     // name -> { frames: [[open, blink?], ...], w, h, ... }
-  var customKinds = null;
+  var kinds = {};       // built-in sprite name -> baked frames and sizes
+  var customKinds = []; // one per loaded custom image
   var sprites = [];
   var particles = [];
   var mouse = { x: -9999, y: -9999 };
@@ -377,26 +299,10 @@
     });
   }
 
-  function buildKinds(done) {
-    if (CUSTOM_IMAGES.length) {
-      var loaded = [], left = CUSTOM_IMAGES.length;
-      CUSTOM_IMAGES.forEach(function (src) {
-        var img = new Image();
-        img.onload = function () {
-          var h = narrow ? CUSTOM_HEIGHT * 0.66 : CUSTOM_HEIGHT;
-          loaded.push({ kind: "wisp", frames: [[img]], h: h, w: (img.naturalWidth / img.naturalHeight) * h, fps: 0 });
-          if (--left === 0) { customKinds = loaded; done(); }
-        };
-        img.onerror = function () {
-          if (--left === 0) { customKinds = loaded; done(); }
-        };
-        img.src = src;
-      });
-      return;
-    }
+  function buildKinds() {
     kinds = {};
     for (var name in SPRITES) {
-      var sp = SPRITES[name], pal = sp.pal || WISP;
+      var sp = SPRITES[name], pal = sp.pal;
       var frames = sp.poses.map(function (rows) {
         var f = [bake(rows, px * dpr, pal)];
         if (sp.blink) f.push(bake(swap(rows, sp.blink), px * dpr, pal));
@@ -415,7 +321,27 @@
         glow: sp.kind === "wisp" ? bakeGlow(trail, Math.max(w, h) * 0.9) : null,
       };
     }
-    done();
+  }
+
+  function loadCustom(done) {
+    if (!CUSTOM_IMAGES.length) return;
+    var left = CUSTOM_IMAGES.length;
+    customKinds = [];
+    CUSTOM_IMAGES.forEach(function (src, i) {
+      var img = new Image();
+      img.onload = function () {
+        var h = narrow ? CUSTOM_HEIGHT * 0.66 : CUSTOM_HEIGHT;
+        customKinds.push({
+          name: "custom" + i, kind: "wisp", smooth: true, frames: [[img]], fps: 0,
+          h: h, w: (img.naturalWidth / img.naturalHeight) * h,
+        });
+        if (--left === 0) done();
+      };
+      img.onerror = function () {
+        if (--left === 0) done();
+      };
+      img.src = src;
+    });
   }
 
   function measure() {
@@ -447,13 +373,14 @@
       emit: 0,
       pushX: 0, pushY: 0,
     };
-    if (k.kind === "disc") { s.speed = rand(70, 90); }
-    if (k.kind === "dog") { s.speed = rand(52, 60); }
-    if (k.kind === "dancer") {
+    if (k.kind === "disc") s.speed = rand(70, 90);
+    if (k.kind === "dog") s.speed = rand(52, 60);
+    if (k.kind === "dancer" || k.kind === "walker") {
       s.dir = Math.random() < 0.5 ? -1 : 1;
-      s.speed = rand(20, 26);
-      s.nextSpin = rand(5, 10); s.spinT = -1;
+      s.speed = k.kind === "dancer" ? rand(20, 26) : rand(24, 30);
       s.nextTurn = rand(10, 20);
+      s.nextSpin = rand(5, 10); s.spinT = -1;
+      s.nextJump = rand(3, 7); s.jumpT = -1;
     }
     return s;
   }
@@ -475,15 +402,7 @@
   }
 
   function populate() {
-    var n = Math.max(5, Math.min(11, Math.round((W * H) / 100000)));
-    var list = [];
-    if (customKinds) {
-      for (var i = 0; i < n; i++) list.push(customKinds[i % customKinds.length]);
-    } else {
-      list.push(kinds.dancer, kinds.frisbee, kinds.dog);
-      var wisps = WISP_NAMES.slice().sort(function () { return Math.random() - 0.5; });
-      for (var j = 0; list.length < n; j++) list.push(kinds[wisps[j % wisps.length]]);
-    }
+    var list = CAST.map(function (n) { return kinds[n]; }).concat(customKinds);
     var pos = spots(list.length);
     sprites = list.map(function (k, i) { return makeSprite(k, pos[i][0], pos[i][1]); });
     particles = [];
@@ -516,35 +435,47 @@
     for (var i = 0; i < sprites.length; i++) {
       var s = sprites[i], k = s.k;
       s.t += dt;
+      s.lift = 0;
       var vx, vy, boost = 1;
 
-      if (k.kind === "dancer") {
-        // moonwalk: slide one way while facing the other, spin now and then
+      if (k.kind === "dancer" || k.kind === "walker") {
         s.nextTurn -= dt;
         if (s.nextTurn <= 0) { s.dir *= -1; s.nextTurn = rand(10, 20); }
-        s.nextSpin -= dt;
-        if (s.nextSpin <= 0 && s.spinT < 0) { s.spinT = 0; s.nextSpin = rand(7, 13); }
         vx = s.dir * s.speed;
         vy = Math.sin(s.t * 0.4 + s.phase) * 6;
-        s.face = -s.dir;
-        if (s.spinT >= 0) {
-          s.spinT += dt;
-          vx = 0;
-          s.face = Math.floor(s.spinT / 0.09) % 2 ? 1 : -1;
-          if (s.spinT > 0.72) s.spinT = -1;
+        if (k.kind === "dancer") {
+          // moonwalk: slide one way while facing the other, spin now and then
+          s.face = -s.dir;
+          s.nextSpin -= dt;
+          if (s.nextSpin <= 0 && s.spinT < 0) { s.spinT = 0; s.nextSpin = rand(7, 13); }
+          if (s.spinT >= 0) {
+            s.spinT += dt;
+            vx = 0;
+            s.face = Math.floor(s.spinT / 0.09) % 2 ? 1 : -1;
+            if (s.spinT > 0.72) s.spinT = -1;
+          }
+        } else {
+          // the avatar walks where it faces and jumps every few seconds
+          s.face = s.dir;
+          s.nextJump -= dt;
+          if (s.nextJump <= 0 && s.jumpT < 0) { s.jumpT = 0; s.nextJump = rand(3, 7); }
+          if (s.jumpT >= 0) {
+            s.jumpT += dt;
+            var jp = s.jumpT / 0.5;
+            s.lift = Math.sin(Math.min(1, jp) * Math.PI) * 22;
+            if (jp >= 1) s.jumpT = -1;
+          }
         }
       } else if (k.kind === "dog" && disc) {
-        // chase the frisbee
-        steer(s, disc, 2.6, dt);
+        steer(s, disc, 2.6, dt); // chase the frisbee
         vx = Math.cos(s.heading) * s.speed;
         vy = Math.sin(s.heading) * s.speed;
       } else if (k.kind === "disc") {
-        // long sweeping arcs
-        s.heading += Math.sin(s.t * 0.45 + s.phase) * 0.7 * dt;
+        s.heading += Math.sin(s.t * 0.45 + s.phase) * 0.7 * dt; // long arcs
         vx = Math.cos(s.heading) * s.speed;
         vy = Math.sin(s.heading) * s.speed * 0.7;
       } else {
-        // wisps wander, with the odd quick dash
+        // wisp (and custom images): wander, with the odd quick dash
         s.heading += Math.sin(s.t * s.turn + s.phase) * 0.9 * dt + rand(-0.6, 0.6) * dt;
         s.nextDash -= dt;
         if (s.nextDash <= 0 && s.dashT < 0) { s.dashT = 0; s.nextDash = rand(5, 12); }
@@ -564,8 +495,8 @@
         var o = sprites[j];
         if ((k.kind === "dog" && o.k.kind === "disc") || (k.kind === "disc" && o.k.kind === "dog")) continue;
         var ox = s.x - o.x, oy = s.y - o.y, od = Math.sqrt(ox * ox + oy * oy);
-        if (od < 150 && od > 0.01) {
-          var rf = ((150 - od) / 150) * 40 * dt;
+        if (od < 180 && od > 0.01) {
+          var rf = ((180 - od) / 180) * 40 * dt;
           s.pushX += (ox / od) * rf;
           s.pushY += (oy / od) * rf;
         }
@@ -584,7 +515,7 @@
       var mvx = vx + s.pushX * 3, mvy = vy + s.pushY * 3;
       s.x += mvx * dt;
       s.y += mvy * dt;
-      if (k.kind !== "dancer") {
+      if (k.kind !== "dancer" && k.kind !== "walker") {
         if (mvx > 4) s.face = 1;
         else if (mvx < -4) s.face = -1;
       }
@@ -599,10 +530,10 @@
       if (s.nextBlink <= 0) { s.blinkT = 0.12; s.nextBlink = rand(2.5, 6); }
       if (s.blinkT > 0) s.blinkT -= dt;
 
-      // trail embers (wisps and the frisbee)
+      // trail (the wisp and the frisbee)
       if (k.trail) {
         s.emit -= dt;
-        if (s.emit <= 0 && particles.length < 260) {
+        if (s.emit <= 0 && particles.length < 200) {
           s.emit = k.kind === "disc" ? 0.03 : boost > 1.5 ? 0.025 : 0.09;
           particles.push({
             x: s.x + rand(-k.w * 0.2, k.w * 0.2),
@@ -639,22 +570,23 @@
       ctx.fillRect(Math.round((pt.x - sz / 2) * dpr), Math.round((pt.y - sz / 2) * dpr), Math.ceil(sz * dpr), Math.ceil(sz * dpr));
     }
 
-    ctx.imageSmoothingEnabled = !!customKinds;
     for (var i = 0; i < sprites.length; i++) {
       var s = sprites[i], k = s.k;
       var pose = k.fps ? Math.floor(s.t * k.fps) % k.frames.length : 0;
+      if (k.kind === "walker" && s.jumpT >= 0) pose = 0; // legs together mid-air
       var set = k.frames[pose];
       var img = set[s.blinkT > 0 && set[1] ? 1 : 0];
       var bob = k.kind === "wisp" ? Math.sin(s.t * 2.2 + s.phase) * 3
               : k.kind === "dog" ? -Math.abs(Math.sin(s.t * 8)) * 1.5 : 0;
       var a = alphaAt(s.x);
-      var cy = s.y + bob;
+      var cy = s.y + bob - (s.lift || 0);
       if (k.glow) {
         var gs = k.glow.width / dpr;
         ctx.globalAlpha = a * (0.8 + 0.2 * Math.sin(s.t * 3 + s.phase));
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.drawImage(k.glow, (s.x - gs / 2) * dpr, (cy - k.h / 2 - gs / 2) * dpr);
       }
+      ctx.imageSmoothingEnabled = !!k.smooth;
       ctx.globalAlpha = a;
       ctx.setTransform(dpr, 0, 0, dpr, s.x * dpr, cy * dpr);
       ctx.scale(s.face, 1);
@@ -674,15 +606,20 @@
   }
 
   function rebuild(repopulate) {
-    buildKinds(function () {
-      if (repopulate || !sprites.length) populate();
-      else sprites.forEach(function (s) { if (!customKinds) s.k = kinds[s.k.name]; });
-      if (reduceMotion) draw();
-    });
+    buildKinds();
+    if (repopulate || !sprites.length) populate();
+    else sprites.forEach(function (s) { if (kinds[s.k.name]) s.k = kinds[s.k.name]; });
+    if (reduceMotion) draw();
   }
 
   measure();
   rebuild(true);
+  loadCustom(function () {
+    // custom images arrive after the built-ins; give each one a spot
+    var pos = spots(customKinds.length);
+    customKinds.forEach(function (k, i) { sprites.push(makeSprite(k, pos[i][0], pos[i][1])); });
+    if (reduceMotion) draw();
+  });
 
   window.addEventListener("resize", function () {
     var oldW = W, oldH = H, oldPx = px, oldDpr = dpr;
