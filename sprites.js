@@ -1,291 +1,163 @@
-// Little elemental critters wandering behind the page.
+// Elemental wisps drifting behind the page, trailing faint embers.
 (function () {
   // ------------------------------------------------------------------
   // Use your own sprite images:
   //   1. Put PNGs with transparent backgrounds in assets/sprites/
   //   2. List them below, e.g. ["./assets/sprites/water.png", ...]
-  // When this list has images, they replace the built-in critters.
+  // When this list has images, they replace the built-in wisps.
   var CUSTOM_IMAGES = [];
   var CUSTOM_HEIGHT = 56; // display height in px on desktop (phones: 2/3)
   // ------------------------------------------------------------------
 
-  // Built-in critters: one palette letter per pixel, "." is transparent.
-  // "e"/"g" mark the top row of each eye; they become skin colour to blink.
+  // Built-in wisps: one palette letter per pixel, "." is transparent.
+  // "e"/"E" are the glowing eyes; they become skin colour to blink.
   var PALETTE = {
-    k: "#1d1b2e", e: "#1d1b2e", d: "#1d1b2e", // outline + eyes/mouth
-    p: "#ff8fa3", w: "#ffffff",                // blush, shine
-    c: "#4fb3ff", C: "#bfe6ff", D: "#2b7fd6",  // water
-    r: "#ff5a3c", o: "#ff9a1f", y: "#ffd84a",  // fire / spark
-    m: "#a58a6a", M: "#7d6448", L: "#d1bea3", n: "#5cc46a", // pebble
-    v: "#eef0ff", V: "#c3c8f0",                // ghost
-    a: "#f4fbff", A: "#c9e6f7",                // cloud
-    N: "#3a9a4a", l: "#c8f5cf",                // leaf
-    i: "#bdf0ff", I: "#7fd3f0",                // frost
-    t: "#f6e7cf", T: "#d9c3a0",                // mushroom stem
-    x: "#4b2a8a", X: "#2f1a5c",                // void
-    g: "#7dffe6", G: "#7dffe6",                // glowing eyes
-    s: "#ffc4e6", S: "#f59bd0",                // bubble
-    u: "#b583ff", U: "#d9bfff", Y: "#8a55e0",  // crystal
+    e: "#fffbe6", E: "#fff3c4", w: "#ffffff",
+    r: "#e0603e", o: "#f09a3a", y: "#f6d36b", R: "#7a2e1f", O: "#8a5a1a", // ember, storm
+    c: "#5aa7d6", C: "#a9d6ef", D: "#3a7bb0", Q: "#1f4466",               // tide
+    x: "#3d2c63", X: "#2a1f47", u: "#9b86d6", Z: "#17112a",               // void
+    n: "#5fae93", N: "#3f8670", l: "#bfe8d8", K: "#1f4a3d",               // shard
+    i: "#bfe3ef", I: "#8cc3d6", F: "#3f6f80",                             // frost
   };
 
-  var CRITTERS = {
-    drip: {
-      skin: "c",
-      rows: [
-        "................",
-        ".......kk.......",
-        "......kcck......",
-        ".....kcccck.....",
-        ".....kcccck.....",
-        "....kcccccck....",
-        "...kcccccccck...",
-        "...kCCcccccck...",
-        "..kcCCCcccccck..",
-        "..kcccccccccDk..",
-        ".kcccceccceDDDk.",
-        "..kcccdccDdDDk..",
-        "..kccpccdDDpDk..",
-        "...kccDDDDDDk...",
-        "....kDDDDDDk....",
-        ".....kkDDkk.....",
-        ".......kk.......",
-      ],
-    },
+  var WISPS = {
     ember: {
-      skin: "y",
+      skin: "o",
+      trail: "o",
       rows: [
-        "........k.......",
-        ".......krk......",
-        "......krrk..kk..",
-        "..kk.krrrk.krrk.",
-        ".krrkrrrrrkrrrk.",
-        ".krrkrrrrrrrrrk.",
-        ".krrrrrrrrrrrrk.",
-        ".koooooyyooook..",
-        ".koooyyyyyyook..",
-        ".koooyyyyyyook..",
-        ".kooyyeyyyeyook.",
-        ".kooyydyyydyook.",
-        "..kooyyydyyook..",
-        "...koyyyyyyok...",
-        "....koyyyyok....",
-        ".....kkkkkk.....",
+        "..........R.....",
+        ".........RrR....",
+        "........RrrR....",
+        ".......RrrrR....",
+        "...R..RrrrrR....",
+        "..RrR.RrrrrR....",
+        ".RrrRRrrrrrR....",
+        ".RrrrroooorrR...",
+        ".RrrroooooorR...",
+        "..RroooyyoooR...",
+        "..RrooeyyyeorR..",
+        "..RrooEyyyEorR..",
+        "..RrooyyyyoorR..",
+        "...RroyyyyorR...",
+        "....RroyyorR....",
+        ".....RRrrRR.....",
+        ".......RR.......",
       ],
     },
-    pebble: {
-      skin: "m",
+    tide: {
+      skin: "c",
+      trail: "C",
       rows: [
-        "................",
-        ".........kk.....",
-        "....kkk.knnk....",
-        "...knnnknnnnk...",
-        "...knnnnnkkk....",
-        "....kkkknk......",
-        "...kkknnnnkkk...",
-        "..kmmmmmmmmmmk..",
-        ".kmmLLmmmmmmmmk.",
-        ".kmmLLmmmmmmmmk.",
-        "kmmmmmemmmemmMMk",
-        "kmmmmmdmmmdMMMMk",
-        ".kmmpmmmdMMMpMk.",
-        ".kmmmmmMMMMMMMk.",
-        "..kmmMMMMMMMMk..",
-        "...kkkMMMMkkk...",
-        "......kkkk......",
-      ],
-    },
-    wisp: {
-      skin: "v",
-      rows: [
-        "................",
-        ".....kkkkkk.....",
-        "....kvvvvvvk....",
-        "...kvwvvvvvvk...",
-        "..kvwwvvvvvvvk..",
-        "..kvvvvvvvvvvk..",
-        ".kvvvvvvvvvvvvk.",
-        ".kvvvvevvvevvvk.",
-        ".kvvvvdvvvdvvvk.",
-        ".kvvvpvvdvvpVVk.",
-        ".kvvvvvvvvVVVVk.",
-        ".kvvvvvVVVVVVVk.",
-        ".kvvvVVVVVVVVVk.",
-        ".kVkkVVkkVVkkVk.",
-        ".kVk.kk..kk.kVk.",
-        "..k..........k..",
-      ],
-    },
-    puff: {
-      skin: "a",
-      rows: [
-        "..................",
-        "..................",
-        ".......kkkkk......",
-        "......kaaaaak.....",
-        "....kkawwaaaak....",
-        "..kkaaawwaaaaak...",
-        ".kaaaaaaaaaaaak...",
-        ".kaaaaaaaaaaaaak..",
-        "kaaaaaaeaaaeaaaak.",
-        "kaaaaaadaaadaaaak.",
-        ".kaaaapaadaapaaak.",
-        ".kAAAAAAAAAAAAAAk.",
-        "..kAAAAAAAAAAAAk..",
-        "...kkkkkkkkkkkk...",
-        "..................",
-      ],
-    },
-    spark: {
-      skin: "y",
-      rows: [
-        "................",
-        ".......kk.......",
-        "......kyyk......",
-        "......kyyk......",
-        ".....kyyyyk.....",
-        ".kkkkkwyyykkkkk.",
-        "kyyyywwyyyyyyyyk",
-        ".kyyyyyyyyyyyyk.",
-        "..kyyyeyyyeyyk..",
-        "...kyydyyydok...",
-        "...kyyyydoook...",
-        "...kyyyoooook...",
-        "...kyookkoook...",
-        "..koook..koook..",
-        "...kok....kok...",
-        "....k......k....",
-      ],
-    },
-    frost: {
-      skin: "i",
-      rows: [
-        "................",
-        "................",
-        "...kkkkkkkkkk...",
-        "..kwwwiiiiiiik..",
-        ".kiwwwiiiiiiiik.",
-        ".kiwwiiiiiiiiik.",
-        ".kiwwiiiiiiiiik.",
-        ".kiiiiiiiiiiiik.",
-        ".kiiiieiiieiiIk.",
-        ".kiiiidiiidiIIk.",
-        ".kiiipiidiipIIk.",
-        ".kiiiiiiiiIIIIk.",
-        ".kiiiiiiiIIIIIk.",
-        ".kiiiiiiIIIIIIk.",
-        "..kiiiiIIIIIIk..",
-        "...kkkkkkkkkk...",
-        "................",
-      ],
-    },
-    shroom: {
-      skin: "t",
-      rows: [
-        "................",
-        "....kkkkkkkk....",
-        "..kkrrrrwwrrkk..",
-        ".krrrrrrwwwrrrk.",
-        "krrrwwrrrwrrrrrk",
-        "krrwwwrrrrrrwrrk",
-        "krrrrrrrrrrwwrrk",
-        "krrrrrrrrrrrrrrk",
-        ".kkkttttttttkkk.",
-        "...kttttttttk...",
-        "...kttetttetk...",
-        "...kttdtttdTk...",
-        "...ktpttdTTpk...",
-        "...ktttTTTTTk...",
-        "....kTTTTTTk....",
-        ".....kkkkkk.....",
-        "................",
+        ".....Q..........",
+        "....QcQ.........",
+        "....QccQ........",
+        "....QcccQ.......",
+        "....QccccQ......",
+        "....QcccccQ.....",
+        "....QccccccQ....",
+        "...QccccccccQ...",
+        "...QcccccccccQ..",
+        "...QcCcccccccQ..",
+        "..QccCcecceccDQ.",
+        "..QccCcEccEDDDQ.",
+        "...QccccccDDDQ..",
+        "...QccccDDDDDQ..",
+        "....QcDDDDDDQ...",
+        ".....QQDDDQQ....",
+        ".......QQQ......",
       ],
     },
     void: {
       skin: "x",
+      trail: "u",
       rows: [
-        "................",
-        "................",
-        "......kkkk......",
-        ".....kxxxxk.....",
-        "....kxxxxxxk....",
-        "...kxxxxxxxwk...",
-        "..kxxwxxxxxxxk..",
-        ".kxxxxxxxxxxxxk.",
-        ".kxxxxgxxxgxxxk.",
-        ".kxxxxGxxxGxxXk.",
-        ".kxxxxxxxxxXXXk.",
-        ".kxxxxxxdXXXwXk.",
-        "..kxwxxXXXXXXk..",
-        "...kxXXXXXXXk...",
-        "....kkkkkkkk....",
-        "................",
-        "................",
+        "..................",
+        "..................",
+        "..................",
+        "......ZZZZZ.......",
+        ".ZZ..ZxxxxxZ......",
+        "ZuuZZuuxxxxxZ.....",
+        "ZuZZxxxxuxxxxZ....",
+        ".ZuZxxxxxxuxxZ....",
+        "..ZuxxxexxexuZ....",
+        "...ZxxxExxExXuZ...",
+        "...ZxxxxxxXXXZuZ..",
+        "...ZxxxxXXXXXZZuZ.",
+        "....ZxXXXXXXZZuuZ.",
+        ".....ZXXXXXZ..ZZ..",
+        "......ZZZZZ.......",
+        "..................",
+        "..................",
+        "..................",
       ],
     },
-    leaf: {
+    shard: {
       skin: "n",
+      trail: "l",
       rows: [
-        "................",
-        "................",
-        "....kkk.........",
-        "..kknnnkk.......",
-        ".knnnnnnlkk.....",
-        ".knNnnnnlnnk....",
-        ".knnNnnnnnnnk...",
-        ".knnnNNnnnnnnk..",
-        ".kNnnneNnnennnk.",
-        ".kNNnndnNndnnnk.",
-        "..kNNpnndNNpnnk.",
-        "...kNNNnnnnNnnk.",
-        "....kNNNnnnnNnk.",
-        ".....kkNNNnnnNk.",
-        ".......kkNNnkk..",
-        ".........kkk....",
-        "................",
+        "........K.........",
+        ".......KnK........",
+        "......KnnNK.......",
+        ".....KnnnNNK......",
+        ".....KlnnNNK...K..",
+        ".K...KlnnNNK..KNK.",
+        "KnK..KlnnNNK.KNNK.",
+        "KnnK.KlnnNNKKnNNK.",
+        "KnnNKKlnnNNKKnNNK.",
+        "KnnNKKlenNeKKnNNK.",
+        "KnnNKKnEnNEKKnNNK.",
+        "KnnNKKnnnNNKKnNNK.",
+        "KnnNKKnnnNNKKnNNK.",
+        "KnnNKKnnnNNKKnNNK.",
+        "KnnNKKnnnNNKKnNNK.",
+        ".KnNKKnnnNNKKnNNK.",
+        "..KK..KKKKK..KKK..",
       ],
     },
-    bubble: {
-      skin: "s",
+    storm: {
+      skin: "y",
+      trail: "y",
       rows: [
-        "................",
-        "................",
-        ".....kkkkkk.....",
-        "....kssssssk....",
-        "...kwwssssssk...",
-        "..kwwwwssssssk..",
-        ".ksswwssssssssk.",
-        ".kssssssssssssk.",
-        ".kssssssssssssk.",
-        ".kssssesssesSSk.",
-        ".kssssdsssdSSSk.",
-        ".kssspssdsSpSSk.",
-        "..ksssssSSSwSk..",
-        "...ksssSSSSSk...",
-        "....kSSSSSSk....",
-        ".....kkkkkk.....",
-        "................",
+        "........O........",
+        ".......OoO.......",
+        ".......OoO.......",
+        "......OOoOO......",
+        ".....OoyyyoO.....",
+        "....OyyyyyyyO....",
+        "...OoywwwyyyoO...",
+        ".OOOyywwwyyyyOOO.",
+        "OoooyyweyyeyyoooO",
+        ".OOOyyyEyyEyyOOO.",
+        "...OoyyyyyyyoO...",
+        "....OyyyyyyyO....",
+        ".....OoyyyoO.....",
+        "......OOoOO......",
+        ".......OoO.......",
+        ".......OoO.......",
+        "........O........",
       ],
     },
-    crystal: {
-      skin: "u",
+    frost: {
+      skin: "i",
+      trail: "w",
       rows: [
-        "................",
-        "................",
-        "....kkkkkkkk....",
-        "...kwwUUUUUUk...",
-        "..kwwwUUUUUUUk..",
-        ".kwwwwUUUUUUUUk.",
-        ".kuuuuuuuYYYYYk.",
-        "..kuuuuuuYYYYk..",
-        "..kuuueuuYeYYk..",
-        "...kuuduuYdYk...",
-        "....kpuuduYp....",
-        "....kuuuuuYk....",
-        ".....kuuuuk.....",
-        "......kuuk......",
-        "......kuuk......",
-        ".......kk.......",
-        "................",
+        ".......FiF.......",
+        ".......FiF.......",
+        ".......FiF.......",
+        ".FF....FiF....FF.",
+        "FiiFF.FiiiF.FFiIF",
+        ".FiiiFiwiiiFiiIF.",
+        "..FFiiwwwiiiiFF..",
+        "...FiiiwiiiiIF...",
+        "...FiiieiieIIF...",
+        "...FiiiEiiEIIF...",
+        "..FFiiiiiIIIIFF..",
+        ".FiiiFiiIIIFIIIF.",
+        "FiiFF.FIIIF.FFIIF",
+        ".FF....FIF....FF.",
+        ".......FIF.......",
+        ".......FIF.......",
+        ".......FIF.......",
       ],
     },
   };
@@ -303,8 +175,9 @@
 
   var W = 0, H = 0, dpr = 1, px = 0;
   var colL = 0, colR = 0, narrow = false;
-  var kinds = [];   // [{ frames: [canvas|img, ...], w, h }]
+  var kinds = [];     // [{ frames, w, h, trail, glow }]
   var sprites = [];
+  var particles = [];
   var mouse = { x: -9999, y: -9999 };
 
   function rand(a, b) {
@@ -328,6 +201,20 @@
     return c;
   }
 
+  // soft round glow in the wisp's trail colour
+  function bakeGlow(hex, radius) {
+    var c = document.createElement("canvas");
+    c.width = c.height = Math.ceil(radius * 2 * dpr);
+    var g = c.getContext("2d");
+    var r = c.width / 2;
+    var grad = g.createRadialGradient(r, r, 0, r, r, r);
+    grad.addColorStop(0, hex + "55");
+    grad.addColorStop(1, hex + "00");
+    g.fillStyle = grad;
+    g.fillRect(0, 0, c.width, c.height);
+    return c;
+  }
+
   function buildKinds(done) {
     if (CUSTOM_IMAGES.length) {
       var loaded = [], left = CUSTOM_IMAGES.length;
@@ -346,13 +233,20 @@
       return;
     }
     var out = [];
-    for (var name in CRITTERS) {
-      var cr = CRITTERS[name];
-      var blink = cr.rows.map(function (r) {
-        return r.split("e").join(cr.skin).split("g").join(cr.skin);
+    for (var name in WISPS) {
+      var wp = WISPS[name];
+      var blink = wp.rows.map(function (r) {
+        return r.split("e").join(wp.skin).split("E").join(wp.skin);
       });
-      var open = bake(cr.rows, px * dpr), shut = bake(blink, px * dpr);
-      out.push({ frames: [open, shut], w: open.width / dpr, h: open.height / dpr });
+      var open = bake(wp.rows, px * dpr), shut = bake(blink, px * dpr);
+      var w = open.width / dpr, h = open.height / dpr;
+      out.push({
+        frames: [open, shut],
+        w: w,
+        h: h,
+        trail: PALETTE[wp.trail],
+        glow: bakeGlow(PALETTE[wp.trail], Math.max(w, h) * 0.9),
+      });
     }
     done(out);
   }
@@ -382,7 +276,8 @@
       t: rand(0, 10),
       face: 1,
       nextBlink: rand(1, 5), blinkT: 0,
-      nextHop: rand(2, 8), hopT: -1,
+      nextDash: rand(3, 9), dashT: -1,
+      emit: 0,
       pushX: 0, pushY: 0,
     };
   }
@@ -392,15 +287,16 @@
     var n = Math.max(5, Math.min(11, Math.round((W * H) / 100000)));
     var order = kinds.slice().sort(function () { return Math.random() - 0.5; });
     sprites = [];
+    particles = [];
     for (var i = 0; i < n; i++) sprites.push(makeSprite(order[i % order.length], i, n));
   }
 
   // faint behind the text column, clearer out in the margins
   function alphaAt(x) {
     var dark = root.classList.contains("dark");
-    if (narrow) return dark ? 0.16 : 0.18;
+    if (narrow) return dark ? 0.18 : 0.2;
     var inner = dark ? 0.12 : 0.13;
-    var outer = dark ? 0.8 : 0.85;
+    var outer = dark ? 0.85 : 0.85;
     var d = Math.max(colL - x, x - colR); // >0 outside the column
     var k = Math.min(1, Math.max(0, (d + 10) / 70));
     return inner + (outer - inner) * k;
@@ -408,15 +304,26 @@
 
   function step(dt) {
     for (var i = 0; i < sprites.length; i++) {
-      var s = sprites[i];
+      var s = sprites[i], k = s.kind;
       s.t += dt;
 
       // wander: the heading takes a slow random walk
       s.heading += Math.sin(s.t * s.turn + s.phase) * 0.9 * dt + rand(-0.6, 0.6) * dt;
-      var vx = Math.cos(s.heading) * s.speed;
-      var vy = Math.sin(s.heading) * s.speed * 0.6;
 
-      // shy: scoot away from the cursor
+      // now and then, a quick dash
+      s.nextDash -= dt;
+      if (s.nextDash <= 0 && s.dashT < 0) { s.dashT = 0; s.nextDash = rand(5, 12); }
+      var boost = 1;
+      if (s.dashT >= 0) {
+        s.dashT += dt;
+        var p = s.dashT / 0.6;
+        boost = 1 + 5 * Math.sin(Math.min(1, p) * Math.PI);
+        if (p >= 1) s.dashT = -1;
+      }
+      var vx = Math.cos(s.heading) * s.speed * boost;
+      var vy = Math.sin(s.heading) * s.speed * 0.6 * boost;
+
+      // shy: drift away from the cursor
       var dx = s.x - mouse.x, dy = s.y - mouse.y, dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < 120 && dist > 0.01) {
         var f = ((120 - dist) / 120) * 160 * dt;
@@ -426,12 +333,11 @@
       s.pushX *= Math.pow(0.15, dt);
       s.pushY *= Math.pow(0.15, dt);
 
-      s.x += (vx + s.pushX * 3) * dt;
-      s.y += (vy + s.pushY * 3) * dt;
-
-      var vxAll = vx + s.pushX * 3;
-      if (vxAll > 4) s.face = 1;
-      else if (vxAll < -4) s.face = -1;
+      var mvx = vx + s.pushX * 3, mvy = vy + s.pushY * 3;
+      s.x += mvx * dt;
+      s.y += mvy * dt;
+      if (mvx > 4) s.face = 1;
+      else if (mvx < -4) s.face = -1;
 
       var m = 70;
       if (s.x < -m) s.x = W + m;
@@ -441,36 +347,69 @@
 
       // blink every few seconds
       s.nextBlink -= dt;
-      if (s.nextBlink <= 0) { s.blinkT = 0.14; s.nextBlink = rand(2.5, 6); }
+      if (s.nextBlink <= 0) { s.blinkT = 0.12; s.nextBlink = rand(2.5, 6); }
       if (s.blinkT > 0) s.blinkT -= dt;
 
-      // the odd little hop
-      s.nextHop -= dt;
-      if (s.nextHop <= 0 && s.hopT < 0) { s.hopT = 0; s.nextHop = rand(4, 10); }
-      if (s.hopT >= 0) { s.hopT += dt; if (s.hopT > 0.55) s.hopT = -1; }
+      // shed trail embers (more while dashing)
+      if (k.trail) {
+        s.emit -= dt;
+        if (s.emit <= 0 && particles.length < 260) {
+          s.emit = boost > 1.5 ? 0.025 : 0.09;
+          particles.push({
+            x: s.x + rand(-k.w * 0.2, k.w * 0.2),
+            y: s.y - k.h * 0.45 + rand(-k.h * 0.2, k.h * 0.2),
+            vx: -mvx * 0.15 + rand(-6, 6),
+            vy: rand(-10, -2),
+            life: 0,
+            max: rand(0.7, 1.3),
+            size: px * (Math.random() < 0.3 ? 2 : 1),
+            color: k.trail,
+          });
+        }
+      }
+    }
+
+    for (var j = particles.length - 1; j >= 0; j--) {
+      var pt = particles[j];
+      pt.life += dt;
+      if (pt.life >= pt.max) { particles.splice(j, 1); continue; }
+      pt.x += pt.vx * dt;
+      pt.y += pt.vy * dt;
     }
   }
 
   function draw() {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // trail embers
+    for (var j = 0; j < particles.length; j++) {
+      var pt = particles[j], fade = 1 - pt.life / pt.max;
+      ctx.globalAlpha = alphaAt(pt.x) * fade * 0.8;
+      ctx.fillStyle = pt.color;
+      var sz = pt.size * (0.5 + fade * 0.5);
+      ctx.fillRect(Math.round((pt.x - sz / 2) * dpr), Math.round((pt.y - sz / 2) * dpr), Math.ceil(sz * dpr), Math.ceil(sz * dpr));
+    }
+
     ctx.imageSmoothingEnabled = !!CUSTOM_IMAGES.length;
     for (var i = 0; i < sprites.length; i++) {
       var s = sprites[i], k = s.kind;
       var img = k.frames[s.blinkT > 0 && k.frames[1] ? 1 : 0];
       var bob = Math.sin(s.t * 2.2 + s.phase) * 3;
-      var hop = 0, sx = 1, sy = 1;
-      if (s.hopT >= 0) {
-        var p = s.hopT / 0.55;
-        hop = -Math.sin(p * Math.PI) * 16;
-        if (p < 0.15) { sx = 1.12; sy = 0.88; }       // crouch
-        else if (p < 0.6) { sx = 0.92; sy = 1.08; }   // stretch
+      var a = alphaAt(s.x);
+      var cy = s.y + bob;
+      if (k.glow) {
+        var gs = k.glow.width / dpr;
+        ctx.globalAlpha = a * (0.8 + 0.2 * Math.sin(s.t * 3 + s.phase));
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.drawImage(k.glow, (s.x - gs / 2) * dpr, (cy - k.h / 2 - gs / 2) * dpr);
       }
-      ctx.globalAlpha = alphaAt(s.x);
-      ctx.setTransform(dpr, 0, 0, dpr, s.x * dpr, (s.y + bob + hop) * dpr);
-      ctx.scale(sx * s.face, sy);
-      ctx.drawImage(img, -k.w / 2, -k.h, k.w, k.h); // anchored at the feet
+      ctx.globalAlpha = a;
+      ctx.setTransform(dpr, 0, 0, dpr, s.x * dpr, cy * dpr);
+      ctx.scale(s.face, 1);
+      ctx.drawImage(img, -k.w / 2, -k.h, k.w, k.h);
     }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = 1;
   }
 
