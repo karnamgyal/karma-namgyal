@@ -389,7 +389,7 @@
 
   function populate() {
     if (!kinds.length) return;
-    var n = Math.max(7, Math.min(16, Math.round((W * H) / 75000)));
+    var n = Math.max(5, Math.min(11, Math.round((W * H) / 100000)));
     var order = kinds.slice().sort(function () { return Math.random() - 0.5; });
     sprites = [];
     for (var i = 0; i < n; i++) sprites.push(makeSprite(order[i % order.length], i, n));
