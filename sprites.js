@@ -1,140 +1,156 @@
-// Original battle-royale-style pixel sprites drifting behind the page.
-// Each sprite is a grid of palette letters; "." is transparent.
+// Little elemental critters wandering behind the page.
 (function () {
+  // ------------------------------------------------------------------
+  // Use your own sprite images:
+  //   1. Put PNGs with transparent backgrounds in assets/sprites/
+  //   2. List them below, e.g. ["./assets/sprites/water.png", ...]
+  // When this list has images, they replace the built-in critters.
+  var CUSTOM_IMAGES = [];
+  var CUSTOM_HEIGHT = 56; // display height in px on desktop (phones: 2/3)
+  // ------------------------------------------------------------------
+
+  // Built-in critters: one palette letter per pixel, "." is transparent.
+  // "e" marks the top row of each eye; it becomes skin colour to blink.
   var PALETTE = {
-    k: "#1d1b2e", // outline
-    w: "#ffffff",
-    l: "#d9dde3", // light grey
-    g: "#9aa1ab", // grey
-    G: "#5d6470", // dark grey
-    y: "#ffd23f", // gold
-    o: "#f29d1f", // dark gold
-    b: "#b0743a", // wood
-    B: "#7a4a22", // dark wood
-    c: "#3fa9f5", // shield blue
-    C: "#a8ddff", // light blue
-    r: "#e84a4a", // red
-    n: "#4caf50", // green
-    N: "#2e7d32", // dark green
+    k: "#1d1b2e", e: "#1d1b2e", d: "#1d1b2e", // outline + eyes/mouth
+    p: "#ff8fa3", w: "#ffffff",                // blush, shine
+    c: "#4fb3ff", C: "#bfe6ff", D: "#2b7fd6",  // water
+    r: "#ff5a3c", o: "#ff9a1f", y: "#ffd84a",  // fire / spark
+    m: "#a58a6a", M: "#7d6448", L: "#d1bea3", n: "#5cc46a", // pebble
+    v: "#eef0ff", V: "#c3c8f0",                // ghost
+    a: "#f4fbff", A: "#c9e6f7",                // cloud
   };
 
-  var SPRITES = {
-    chest: [
-      "..kkkkkkkkkk..",
-      ".kbbbbbbbbbbk.",
-      "kbBbbbbbbbbBbk",
-      "kyyyyyyyyyyyyk",
-      "kbbbbbkkbbbbbk",
-      "kBbbbkyykbbbBk",
-      "kyyyyykkyyyyyk",
-      "kbbbbbbbbbbbbk",
-      "kBbbbbbbbbbbBk",
-      "kyyyyyyyyyyyyk",
-      ".kkkkkkkkkkkk.",
-    ],
-    potion: [
-      "...kkkk...",
-      "...kllk...",
-      "...kGGk...",
-      "..kkllkk..",
-      ".kCCCCCCk.",
-      "kCCcccccck",
-      "kcwcccccck",
-      "kcwcccccck",
-      "kcccccccck",
-      "kcccccccck",
-      ".kcccccck.",
-      "..kkkkkk..",
-    ],
-    pickaxe: [
-      "...kkkkkk.....",
-      ".kkllllllkk...",
-      "kllggkkgglllk.",
-      "kgkk.kBk.kkglk",
-      "kk...kbk...kgk",
-      ".....kbk....kk",
-      ".....kbk......",
-      ".....kBk......",
-      ".....kbk......",
-      ".....kbk......",
-      ".....kBk......",
-      ".....kbk......",
-      ".....kkk......",
-    ],
-    medkit: [
-      "....kkkk....",
-      "...kk..kk...",
-      "kkkkkkkkkkkk",
-      "kwwwwwwwwwwk",
-      "kwwwwrrwwwwk",
-      "kwwwwrrwwwwk",
-      "kwwrrrrrrwwk",
-      "kwwrrrrrrwwk",
-      "kwwwwrrwwwwk",
-      "kwwwwrrwwwwk",
-      "kllllllllllk",
-      "kkkkkkkkkkkk",
-    ],
-    ammo: [
-      ".kk.kk.kk.kk.",
-      "kyokyokyokyok",
-      "kyokyokyokyok",
-      "kkkkkkkkkkkkk",
-      "knnnnnnnnnnnk",
-      "knNNNNNNNNNnk",
-      "knNnnnnnnnNnk",
-      "knNNNNNNNNNnk",
-      "knnnnnnnnnnnk",
-      "kkkkkkkkkkkkk",
-    ],
-    drop: [
-      ".....kkkkkk.....",
-      "...kkrrwwrrkk...",
-      "..krrrwwwwrrrk..",
-      ".krrrwwwwwwrrrk.",
-      "kkkkkkkkkkkkkkkk",
-      ".k.....kk.....k.",
-      "..k....kk....k..",
-      "...k...kk...k...",
-      "....k..kk..k....",
-      ".....kkkkkk.....",
-      "....kkkkkkkk....",
-      "....kbBbbBbk....",
-      "....kbbBBbbk....",
-      "....kbbBBbbk....",
-      "....kbBbbBbk....",
-      "....kkkkkkkk....",
-    ],
-    bush: [
-      "....kkkk......",
-      "..kknnnnkkk...",
-      ".knnNnnnnnnk..",
-      "knnnnnnNnnnnk.",
-      "knNnnnnnnnNnnk",
-      "knnnnNnnnnnnnk",
-      ".knnnnnnnNnnk.",
-      "..kkkkkkkkkk..",
-    ],
+  var CRITTERS = {
+    drip: {
+      skin: "c",
+      rows: [
+        "................",
+        ".......kk.......",
+        "......kcck......",
+        ".....kcccck.....",
+        ".....kcccck.....",
+        "....kcccccck....",
+        "...kcccccccck...",
+        "...kCCcccccck...",
+        "..kcCCCcccccck..",
+        "..kcccccccccDk..",
+        ".kcccceccceDDDk.",
+        "..kcccdccDdDDk..",
+        "..kccpccdDDpDk..",
+        "...kccDDDDDDk...",
+        "....kDDDDDDk....",
+        ".....kkDDkk.....",
+        ".......kk.......",
+      ],
+    },
+    ember: {
+      skin: "y",
+      rows: [
+        "........k.......",
+        ".......krk......",
+        "......krrk..kk..",
+        "..kk.krrrk.krrk.",
+        ".krrkrrrrrkrrrk.",
+        ".krrkrrrrrrrrrk.",
+        ".krrrrrrrrrrrrk.",
+        ".koooooyyooook..",
+        ".koooyyyyyyook..",
+        ".koooyyyyyyook..",
+        ".kooyyeyyyeyook.",
+        ".kooyydyyydyook.",
+        "..kooyyydyyook..",
+        "...koyyyyyyok...",
+        "....koyyyyok....",
+        ".....kkkkkk.....",
+      ],
+    },
+    pebble: {
+      skin: "m",
+      rows: [
+        "................",
+        ".........kk.....",
+        "....kkk.knnk....",
+        "...knnnknnnnk...",
+        "...knnnnnkkk....",
+        "....kkkknk......",
+        "...kkknnnnkkk...",
+        "..kmmmmmmmmmmk..",
+        ".kmmLLmmmmmmmmk.",
+        ".kmmLLmmmmmmmmk.",
+        "kmmmmmemmmemmMMk",
+        "kmmmmmdmmmdMMMMk",
+        ".kmmpmmmdMMMpMk.",
+        ".kmmmmmMMMMMMMk.",
+        "..kmmMMMMMMMMk..",
+        "...kkkMMMMkkk...",
+        "......kkkk......",
+      ],
+    },
+    wisp: {
+      skin: "v",
+      rows: [
+        "................",
+        ".....kkkkkk.....",
+        "....kvvvvvvk....",
+        "...kvwvvvvvvk...",
+        "..kvwwvvvvvvvk..",
+        "..kvvvvvvvvvvk..",
+        ".kvvvvvvvvvvvvk.",
+        ".kvvvvevvvevvvk.",
+        ".kvvvvdvvvdvvvk.",
+        ".kvvvpvvdvvpVVk.",
+        ".kvvvvvvvvVVVVk.",
+        ".kvvvvvVVVVVVVk.",
+        ".kvvvVVVVVVVVVk.",
+        ".kVkkVVkkVVkkVk.",
+        ".kVk.kk..kk.kVk.",
+        "..k..........k..",
+      ],
+    },
+    puff: {
+      skin: "a",
+      rows: [
+        "..................",
+        "..................",
+        ".......kkkkk......",
+        "......kaaaaak.....",
+        "....kkawwaaaak....",
+        "..kkaaawwaaaaak...",
+        ".kaaaaaaaaaaaak...",
+        ".kaaaaaaaaaaaaak..",
+        "kaaaaaaeaaaeaaaak.",
+        "kaaaaaadaaadaaaak.",
+        ".kaaaapaadaapaaak.",
+        ".kAAAAAAAAAAAAAAk.",
+        "..kAAAAAAAAAAAAk..",
+        "...kkkkkkkkkkkk...",
+        "..................",
+      ],
+    },
+    spark: {
+      skin: "y",
+      rows: [
+        "................",
+        ".......kk.......",
+        "......kyyk......",
+        "......kyyk......",
+        ".....kyyyyk.....",
+        ".kkkkkwyyykkkkk.",
+        "kyyyywwyyyyyyyyk",
+        ".kyyyyyyyyyyyyk.",
+        "..kyyyeyyyeyyk..",
+        "...kyydyyydok...",
+        "...kyyyydoook...",
+        "...kyyyoooook...",
+        "...kyookkoook...",
+        "..koook..koook..",
+        "...kok....kok...",
+        "....k......k....",
+      ],
+    },
   };
 
-  // pre-render a sprite to its own canvas at an integer pixel size
-  function bake(rows, px) {
-    var c = document.createElement("canvas");
-    c.width = rows[0].length * px;
-    c.height = rows.length * px;
-    var ctx = c.getContext("2d");
-    rows.forEach(function (row, y) {
-      for (var x = 0; x < row.length; x++) {
-        var col = PALETTE[row[x]];
-        if (!col) continue;
-        ctx.fillStyle = col;
-        ctx.fillRect(x * px, y * px, px, px);
-      }
-    });
-    return c;
-  }
-
-  var FLOATERS = ["chest", "potion", "pickaxe", "medkit", "ammo", "bush"];
   var root = document.documentElement;
   var reduceMotion =
     window.matchMedia &&
@@ -148,7 +164,7 @@
 
   var W = 0, H = 0, dpr = 1, px = 0;
   var colL = 0, colR = 0, narrow = false;
-  var baked = {};
+  var kinds = [];   // [{ frames: [canvas|img, ...], w, h }]
   var sprites = [];
   var mouse = { x: -9999, y: -9999 };
 
@@ -156,7 +172,51 @@
     return a + Math.random() * (b - a);
   }
 
-  function resize() {
+  // pixel grid -> canvas at an integer pixel size
+  function bake(rows, size) {
+    var c = document.createElement("canvas");
+    c.width = rows[0].length * size;
+    c.height = rows.length * size;
+    var g = c.getContext("2d");
+    rows.forEach(function (row, y) {
+      for (var x = 0; x < row.length; x++) {
+        var col = PALETTE[row[x]];
+        if (!col) continue;
+        g.fillStyle = col;
+        g.fillRect(x * size, y * size, size, size);
+      }
+    });
+    return c;
+  }
+
+  function buildKinds(done) {
+    if (CUSTOM_IMAGES.length) {
+      var loaded = [], left = CUSTOM_IMAGES.length;
+      CUSTOM_IMAGES.forEach(function (src) {
+        var img = new Image();
+        img.onload = function () {
+          var h = narrow ? CUSTOM_HEIGHT * 0.66 : CUSTOM_HEIGHT;
+          loaded.push({ frames: [img], h: h, w: (img.naturalWidth / img.naturalHeight) * h });
+          if (--left === 0) done(loaded);
+        };
+        img.onerror = function () {
+          if (--left === 0) done(loaded);
+        };
+        img.src = src;
+      });
+      return;
+    }
+    var out = [];
+    for (var name in CRITTERS) {
+      var cr = CRITTERS[name];
+      var blink = cr.rows.map(function (r) { return r.split("e").join(cr.skin); });
+      var open = bake(cr.rows, px * dpr), shut = bake(blink, px * dpr);
+      out.push({ frames: [open, shut], w: open.width / dpr, h: open.height / dpr });
+    }
+    done(out);
+  }
+
+  function measure() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = window.innerWidth;
     H = window.innerHeight;
@@ -166,47 +226,40 @@
     colL = r.left;
     colR = r.right;
     narrow = W < 760;
-    var nextPx = W < 640 ? 2 : 3;
-    if (nextPx !== px) {
-      px = nextPx;
-      for (var name in SPRITES) baked[name] = bake(SPRITES[name], px * dpr);
-    }
+    px = W < 640 ? 2 : 3;
   }
 
   function makeSprite(kind, i, n) {
-    var s = { kind: kind, phase: rand(0, Math.PI * 2), t: 0, pushX: 0, pushY: 0 };
-    if (kind === "drop") {
-      s.x0 = rand(0.05, 0.95) * W;
-      s.y = rand(-0.2, 1) * H;
-      s.vy = rand(16, 26);
-    } else {
-      // spread starting points across the screen
-      s.x = ((i + rand(0.1, 0.9)) / n) * W;
-      s.y = rand(0.05, 0.95) * H;
-      var a = rand(0, Math.PI * 2), sp = rand(6, 15);
-      s.vx = Math.cos(a) * sp;
-      s.vy = Math.sin(a) * sp;
-      s.spin = kind === "pickaxe" ? rand(0.35, 0.6) * (Math.random() < 0.5 ? -1 : 1) : 0;
-    }
-    return s;
+    return {
+      kind: kind,
+      x: ((i + rand(0.1, 0.9)) / n) * W,
+      y: rand(0.08, 0.92) * H,
+      heading: rand(0, Math.PI * 2),
+      speed: rand(10, 18),
+      turn: rand(0.5, 1.1),
+      phase: rand(0, Math.PI * 2),
+      t: rand(0, 10),
+      face: 1,
+      nextBlink: rand(1, 5), blinkT: 0,
+      nextHop: rand(2, 8), hopT: -1,
+      pushX: 0, pushY: 0,
+    };
   }
 
   function populate() {
-    var n = Math.max(5, Math.min(12, Math.round((W * H) / 110000)));
-    var drops = narrow ? 1 : 2;
+    if (!kinds.length) return;
+    var n = Math.max(5, Math.min(11, Math.round((W * H) / 120000)));
+    var order = kinds.slice().sort(function () { return Math.random() - 0.5; });
     sprites = [];
-    var order = FLOATERS.slice().sort(function () { return Math.random() - 0.5; });
-    for (var i = 0; i < n - drops; i++)
-      sprites.push(makeSprite(order[i % order.length], i, n - drops));
-    for (var j = 0; j < drops; j++) sprites.push(makeSprite("drop", j, drops));
+    for (var i = 0; i < n; i++) sprites.push(makeSprite(order[i % order.length], i, n));
   }
 
   // faint behind the text column, clearer out in the margins
   function alphaAt(x) {
     var dark = root.classList.contains("dark");
-    var inner = dark ? 0.12 : 0.13;
-    var outer = dark ? 0.72 : 0.78;
     if (narrow) return dark ? 0.16 : 0.18;
+    var inner = dark ? 0.12 : 0.13;
+    var outer = dark ? 0.8 : 0.85;
     var d = Math.max(colL - x, x - colR); // >0 outside the column
     var k = Math.min(1, Math.max(0, (d + 10) / 70));
     return inner + (outer - inner) * k;
@@ -214,57 +267,68 @@
 
   function step(dt) {
     for (var i = 0; i < sprites.length; i++) {
-      var s = sprites[i], img = baked[s.kind];
-      var hh = img.height / dpr / 2;
+      var s = sprites[i];
       s.t += dt;
 
-      if (s.kind === "drop") {
-        s.y += s.vy * dt;
-        s.x = s.x0 + Math.sin(s.t * 0.7 + s.phase) * 16;
-        s.rot = Math.sin(s.t * 0.7 + s.phase) * 0.1;
-        if (s.y - hh > H + 10) {
-          s.y = -hh - rand(10, 120);
-          s.x0 = rand(0.05, 0.95) * W;
-        }
-      } else {
-        s.x += s.vx * dt;
-        s.y += s.vy * dt;
-        s.bob = Math.sin(s.t * 0.9 + s.phase) * 4;
-        s.rot = s.spin ? s.t * s.spin : Math.sin(s.t * 0.6 + s.phase) * 0.08;
-        var m = 60;
-        if (s.x < -m) s.x = W + m;
-        if (s.x > W + m) s.x = -m;
-        if (s.y < -m) s.y = H + m;
-        if (s.y > H + m) s.y = -m;
-      }
+      // wander: the heading takes a slow random walk
+      s.heading += Math.sin(s.t * s.turn + s.phase) * 0.9 * dt + rand(-0.6, 0.6) * dt;
+      var vx = Math.cos(s.heading) * s.speed;
+      var vy = Math.sin(s.heading) * s.speed * 0.6;
 
-      // drift away from the cursor
+      // shy: scoot away from the cursor
       var dx = s.x - mouse.x, dy = s.y - mouse.y, dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 110 && dist > 0.01) {
-        var f = ((110 - dist) / 110) * 140 * dt;
+      if (dist < 120 && dist > 0.01) {
+        var f = ((120 - dist) / 120) * 160 * dt;
         s.pushX += (dx / dist) * f;
         s.pushY += (dy / dist) * f;
       }
-      s.pushX *= Math.pow(0.12, dt);
-      s.pushY *= Math.pow(0.12, dt);
-      if (s.kind === "drop") s.x0 += s.pushX * dt * 3;
-      else s.x += s.pushX * dt * 3;
-      s.y += s.pushY * dt * 3;
+      s.pushX *= Math.pow(0.15, dt);
+      s.pushY *= Math.pow(0.15, dt);
+
+      s.x += (vx + s.pushX * 3) * dt;
+      s.y += (vy + s.pushY * 3) * dt;
+
+      var vxAll = vx + s.pushX * 3;
+      if (vxAll > 4) s.face = 1;
+      else if (vxAll < -4) s.face = -1;
+
+      var m = 70;
+      if (s.x < -m) s.x = W + m;
+      if (s.x > W + m) s.x = -m;
+      if (s.y < -m) s.y = H + m;
+      if (s.y > H + m) s.y = -m;
+
+      // blink every few seconds
+      s.nextBlink -= dt;
+      if (s.nextBlink <= 0) { s.blinkT = 0.14; s.nextBlink = rand(2.5, 6); }
+      if (s.blinkT > 0) s.blinkT -= dt;
+
+      // the odd little hop
+      s.nextHop -= dt;
+      if (s.nextHop <= 0 && s.hopT < 0) { s.hopT = 0; s.nextHop = rand(4, 10); }
+      if (s.hopT >= 0) { s.hopT += dt; if (s.hopT > 0.55) s.hopT = -1; }
     }
   }
 
   function draw() {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingEnabled = !!CUSTOM_IMAGES.length;
     for (var i = 0; i < sprites.length; i++) {
-      var s = sprites[i], img = baked[s.kind];
-      var w = img.width / dpr, h = img.height / dpr;
-      var y = s.y + (s.bob || 0);
+      var s = sprites[i], k = s.kind;
+      var img = k.frames[s.blinkT > 0 && k.frames[1] ? 1 : 0];
+      var bob = Math.sin(s.t * 2.2 + s.phase) * 3;
+      var hop = 0, sx = 1, sy = 1;
+      if (s.hopT >= 0) {
+        var p = s.hopT / 0.55;
+        hop = -Math.sin(p * Math.PI) * 16;
+        if (p < 0.15) { sx = 1.12; sy = 0.88; }       // crouch
+        else if (p < 0.6) { sx = 0.92; sy = 1.08; }   // stretch
+      }
       ctx.globalAlpha = alphaAt(s.x);
-      ctx.setTransform(dpr, 0, 0, dpr, s.x * dpr, y * dpr);
-      if (s.rot) ctx.rotate(s.rot);
-      ctx.drawImage(img, -w / 2, -h / 2, w, h);
+      ctx.setTransform(dpr, 0, 0, dpr, s.x * dpr, (s.y + bob + hop) * dpr);
+      ctx.scale(sx * s.face, sy);
+      ctx.drawImage(img, -k.w / 2, -k.h, k.w, k.h); // anchored at the feet
     }
     ctx.globalAlpha = 1;
   }
@@ -278,13 +342,25 @@
     requestAnimationFrame(frame);
   }
 
-  resize();
-  populate();
+  function rebuild(repopulate) {
+    buildKinds(function (k) {
+      if (!k.length) return;
+      kinds = k;
+      if (repopulate || !sprites.length) populate();
+      else sprites.forEach(function (s, i) { s.kind = kinds[i % kinds.length]; });
+      if (reduceMotion) draw();
+    });
+  }
+
+  measure();
+  rebuild(true);
+
   window.addEventListener("resize", function () {
-    var oldW = W, oldH = H;
-    resize();
-    if (Math.abs(W - oldW) > 120 || Math.abs(H - oldH) > 200) populate();
-    if (reduceMotion) draw();
+    var oldW = W, oldH = H, oldPx = px, oldDpr = dpr;
+    measure();
+    var big = Math.abs(W - oldW) > 120 || Math.abs(H - oldH) > 200;
+    if (big || px !== oldPx || dpr !== oldDpr) rebuild(big);
+    else if (reduceMotion) draw();
   });
   window.addEventListener("mousemove", function (e) {
     mouse.x = e.clientX;
@@ -295,9 +371,7 @@
   });
 
   if (reduceMotion) {
-    // still scene for people who turn motion off
-    step(0);
-    draw();
+    // a still scene for people who turn motion off
     new MutationObserver(draw).observe(root, { attributes: true, attributeFilter: ["class"] });
   } else {
     requestAnimationFrame(frame);
