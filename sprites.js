@@ -1,4 +1,4 @@
-// Little elemental critters (and a pup) wandering behind the page.
+// Little elemental critters wandering behind the page.
 (function () {
   // ------------------------------------------------------------------
   // Use your own sprite images:
@@ -10,7 +10,7 @@
   // ------------------------------------------------------------------
 
   // Built-in critters: one palette letter per pixel, "." is transparent.
-  // "e" marks the top row of each eye; it becomes skin colour to blink.
+  // "e"/"g" mark the top row of each eye; they become skin colour to blink.
   var PALETTE = {
     k: "#1d1b2e", e: "#1d1b2e", d: "#1d1b2e", // outline + eyes/mouth
     p: "#ff8fa3", w: "#ffffff",                // blush, shine
@@ -19,8 +19,13 @@
     m: "#a58a6a", M: "#7d6448", L: "#d1bea3", n: "#5cc46a", // pebble
     v: "#eef0ff", V: "#c3c8f0",                // ghost
     a: "#f4fbff", A: "#c9e6f7",                // cloud
-    h: "#e8c38f", H: "#c99a5b", j: "#8a5a35", // pup coat
-    f: "#fbe8c8", q: "#ff6f91",                // pup muzzle, tongue
+    N: "#3a9a4a", l: "#c8f5cf",                // leaf
+    i: "#bdf0ff", I: "#7fd3f0",                // frost
+    t: "#f6e7cf", T: "#d9c3a0",                // mushroom stem
+    x: "#4b2a8a", X: "#2f1a5c",                // void
+    g: "#7dffe6", G: "#7dffe6",                // glowing eyes
+    s: "#ffc4e6", S: "#f59bd0",                // bubble
+    u: "#b583ff", U: "#d9bfff", Y: "#8a55e0",  // crystal
   };
 
   var CRITTERS = {
@@ -151,47 +156,136 @@
         "....k......k....",
       ],
     },
-    pup: {
-      skin: "h",
-      walk: [
-        [
-          "......................",
-          "......................",
-          ".............kkkkk....",
-          "..k.........khhhhhk...",
-          ".khk........khhhhhhk..",
-          ".khk.......khjjhehhkk.",
-          ".khhk.kkkkkkhjjhdhfffd",
-          ".khhkkjjjhhhccjhhpfffk",
-          ".khkhjjjjjhhccjhhffffk",
-          "..khhhjjjhhhccjhhkdqk.",
-          "..khhhhhhhhhcchkk..q..",
-          "..khhhhhhhhhhhhhk.....",
-          "...khhHHHHHhhHHHk.....",
-          "...khhkHHHHhhkHHk.....",
-          "...khhkkHkkhhkHHk.....",
-          "...khhkkHkkhhkHHk.....",
-          "....kk..k..kk.kk......",
-        ],
-        [
-          "......................",
-          "......................",
-          ".............kkkkk....",
-          "...k........khhhhhk...",
-          "..khk.......khhhhhhk..",
-          ".khhk......khjjhehhkk.",
-          ".khhk.kkkkkkhjjhdhfffd",
-          "..khkkjjjhhhccjhhpfffk",
-          "...khjjjjjhhccjhhffffk",
-          "..khhhjjjhhhccjhhkdqk.",
-          "..khhhhhhhhhcchkk..q..",
-          "..khhhhhhhhhhhhk......",
-          "...kHhhHHHHHhHHk......",
-          "....khhHHHHkhHHk......",
-          "....khhHkkkkhHHk......",
-          "....khhHk..khHHk......",
-          ".....kkk....kkk.......",
-        ],
+    frost: {
+      skin: "i",
+      rows: [
+        "................",
+        "................",
+        "...kkkkkkkkkk...",
+        "..kwwwiiiiiiik..",
+        ".kiwwwiiiiiiiik.",
+        ".kiwwiiiiiiiiik.",
+        ".kiwwiiiiiiiiik.",
+        ".kiiiiiiiiiiiik.",
+        ".kiiiieiiieiiIk.",
+        ".kiiiidiiidiIIk.",
+        ".kiiipiidiipIIk.",
+        ".kiiiiiiiiIIIIk.",
+        ".kiiiiiiiIIIIIk.",
+        ".kiiiiiiIIIIIIk.",
+        "..kiiiiIIIIIIk..",
+        "...kkkkkkkkkk...",
+        "................",
+      ],
+    },
+    shroom: {
+      skin: "t",
+      rows: [
+        "................",
+        "....kkkkkkkk....",
+        "..kkrrrrwwrrkk..",
+        ".krrrrrrwwwrrrk.",
+        "krrrwwrrrwrrrrrk",
+        "krrwwwrrrrrrwrrk",
+        "krrrrrrrrrrwwrrk",
+        "krrrrrrrrrrrrrrk",
+        ".kkkttttttttkkk.",
+        "...kttttttttk...",
+        "...kttetttetk...",
+        "...kttdtttdTk...",
+        "...ktpttdTTpk...",
+        "...ktttTTTTTk...",
+        "....kTTTTTTk....",
+        ".....kkkkkk.....",
+        "................",
+      ],
+    },
+    void: {
+      skin: "x",
+      rows: [
+        "................",
+        "................",
+        "......kkkk......",
+        ".....kxxxxk.....",
+        "....kxxxxxxk....",
+        "...kxxxxxxxwk...",
+        "..kxxwxxxxxxxk..",
+        ".kxxxxxxxxxxxxk.",
+        ".kxxxxgxxxgxxxk.",
+        ".kxxxxGxxxGxxXk.",
+        ".kxxxxxxxxxXXXk.",
+        ".kxxxxxxdXXXwXk.",
+        "..kxwxxXXXXXXk..",
+        "...kxXXXXXXXk...",
+        "....kkkkkkkk....",
+        "................",
+        "................",
+      ],
+    },
+    leaf: {
+      skin: "n",
+      rows: [
+        "................",
+        "................",
+        "....kkk.........",
+        "..kknnnkk.......",
+        ".knnnnnnlkk.....",
+        ".knNnnnnlnnk....",
+        ".knnNnnnnnnnk...",
+        ".knnnNNnnnnnnk..",
+        ".kNnnneNnnennnk.",
+        ".kNNnndnNndnnnk.",
+        "..kNNpnndNNpnnk.",
+        "...kNNNnnnnNnnk.",
+        "....kNNNnnnnNnk.",
+        ".....kkNNNnnnNk.",
+        ".......kkNNnkk..",
+        ".........kkk....",
+        "................",
+      ],
+    },
+    bubble: {
+      skin: "s",
+      rows: [
+        "................",
+        "................",
+        ".....kkkkkk.....",
+        "....kssssssk....",
+        "...kwwssssssk...",
+        "..kwwwwssssssk..",
+        ".ksswwssssssssk.",
+        ".kssssssssssssk.",
+        ".kssssssssssssk.",
+        ".kssssesssesSSk.",
+        ".kssssdsssdSSSk.",
+        ".kssspssdsSpSSk.",
+        "..ksssssSSSwSk..",
+        "...ksssSSSSSk...",
+        "....kSSSSSSk....",
+        ".....kkkkkk.....",
+        "................",
+      ],
+    },
+    crystal: {
+      skin: "u",
+      rows: [
+        "................",
+        "................",
+        "....kkkkkkkk....",
+        "...kwwUUUUUUk...",
+        "..kwwwUUUUUUUk..",
+        ".kwwwwUUUUUUUUk.",
+        ".kuuuuuuuYYYYYk.",
+        "..kuuuuuuYYYYk..",
+        "..kuuueuuYeYYk..",
+        "...kuuduuYdYk...",
+        "....kpuuduYp....",
+        "....kuuuuuYk....",
+        ".....kuuuuk.....",
+        "......kuuk......",
+        "......kuuk......",
+        ".......kk.......",
+        "................",
       ],
     },
   };
@@ -254,18 +348,11 @@
     var out = [];
     for (var name in CRITTERS) {
       var cr = CRITTERS[name];
-      var poses = cr.walk || [cr.rows];
-      var frames = [];
-      poses.forEach(function (rows) {
-        var blink = rows.map(function (r) { return r.split("e").join(cr.skin); });
-        frames.push(bake(rows, px * dpr), bake(blink, px * dpr));
+      var blink = cr.rows.map(function (r) {
+        return r.split("e").join(cr.skin).split("g").join(cr.skin);
       });
-      out.push({
-        frames: frames,
-        walker: !!cr.walk,
-        w: frames[0].width / dpr,
-        h: frames[0].height / dpr,
-      });
+      var open = bake(cr.rows, px * dpr), shut = bake(blink, px * dpr);
+      out.push({ frames: [open, shut], w: open.width / dpr, h: open.height / dpr });
     }
     done(out);
   }
@@ -302,10 +389,8 @@
 
   function populate() {
     if (!kinds.length) return;
-    var n = Math.max(5, Math.min(11, Math.round((W * H) / 120000)));
-    var order = kinds.slice().sort(function (a, b) {
-      return (b.walker ? 1 : 0) - (a.walker ? 1 : 0) || Math.random() - 0.5;
-    });
+    var n = Math.max(7, Math.min(16, Math.round((W * H) / 75000)));
+    var order = kinds.slice().sort(function () { return Math.random() - 0.5; });
     sprites = [];
     for (var i = 0; i < n; i++) sprites.push(makeSprite(order[i % order.length], i, n));
   }
@@ -329,7 +414,7 @@
       // wander: the heading takes a slow random walk
       s.heading += Math.sin(s.t * s.turn + s.phase) * 0.9 * dt + rand(-0.6, 0.6) * dt;
       var vx = Math.cos(s.heading) * s.speed;
-      var vy = Math.sin(s.heading) * s.speed * (s.kind.walker ? 0.25 : 0.6);
+      var vy = Math.sin(s.heading) * s.speed * 0.6;
 
       // shy: scoot away from the cursor
       var dx = s.x - mouse.x, dy = s.y - mouse.y, dist = Math.sqrt(dx * dx + dy * dy);
@@ -372,12 +457,8 @@
     ctx.imageSmoothingEnabled = !!CUSTOM_IMAGES.length;
     for (var i = 0; i < sprites.length; i++) {
       var s = sprites[i], k = s.kind;
-      var blinking = s.blinkT > 0 && k.frames.length > 1 ? 1 : 0;
-      var pose = k.walker ? (Math.floor(s.t * 6) % 2) * 2 : 0;
-      var img = k.frames[pose + blinking];
-      var bob = k.walker
-        ? -Math.abs(Math.sin(s.t * 9.4)) * 1.5
-        : Math.sin(s.t * 2.2 + s.phase) * 3;
+      var img = k.frames[s.blinkT > 0 && k.frames[1] ? 1 : 0];
+      var bob = Math.sin(s.t * 2.2 + s.phase) * 3;
       var hop = 0, sx = 1, sy = 1;
       if (s.hopT >= 0) {
         var p = s.hopT / 0.55;
