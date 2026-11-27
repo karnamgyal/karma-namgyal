@@ -5,300 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Karma Namgyal</title>
     <link rel="icon" type="image/svg+xml" href="./favicon-star.svg" />
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        background: #fff;
-        color: #111;
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-        font-size: 15.75px;
-        line-height: 1.75;
-        max-width: 680px;
-        margin: 0 auto;
-        padding: 84px 26px;
-      }
-      a {
-        color: #111;
-        text-underline-offset: 3px;
-      }
-      a:hover {
-        color: #555;
-      }
-      .top-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 32px;
-      }
-      .top-row h1 {
-        font-size: 15px;
-        font-weight: 600;
-      }
-      .seg {
-        display: flex;
-        border: 1px solid #ddd;
-        border-radius: 100px;
-        overflow: hidden;
-      }
-      .seg-btn {
-        background: none;
-        border: none;
-        border-left: 1px solid #ddd;
-        padding: 4px 14px;
-        font-size: 12px;
-        color: #666;
-        cursor: pointer;
-        font-family: inherit;
-        transition: all 0.15s;
-        text-decoration: none;
-        display: inline-block;
-        white-space: nowrap;
-      }
-      .seg-btn:first-child {
-        border-left: none;
-      }
-      .seg-btn:hover {
-        color: #111;
-        background: #f5f5f5;
-      }
-      .seg-btn.active {
-        color: #111;
-        background: #f3f3f3;
-      }
-      .theme-toggle {
-        min-width: 40px;
-        text-align: center;
-        font-size: 14px;
-      }
-      .cards {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-      }
-      .card {
-        border: 1px solid #e6e6e6;
-        border-radius: 12px;
-        overflow: hidden;
-        background: #fff;
-        box-shadow:
-          0 1px 2px rgba(17, 17, 17, 0.05),
-          0 8px 20px -6px rgba(17, 17, 17, 0.1);
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s,
-          transform 0.2s;
-      }
-      .card:hover {
-        border-color: #cfcfcf;
-        box-shadow:
-          0 2px 4px rgba(17, 17, 17, 0.06),
-          0 14px 28px -8px rgba(17, 17, 17, 0.16);
-        transform: translateY(-2px);
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .card,
-        .card:hover {
-          transition: none;
-          transform: none;
-        }
-      }
-      .card-preview {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 2084 / 1181;
-        background: #f7f7f5;
-        position: relative;
-        overflow: hidden;
-      }
-      .card-preview.card-preview-waveform {
-        height: auto;
-        aspect-ratio: 2084 / 1181;
-      }
-      .card-preview canvas {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-      }
-      .card-preview img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        object-position: top center;
-        display: block;
-      }
-      .card-preview.card-preview-diagram,
-      body.dark .card-preview.card-preview-diagram {
-        background: #fff;
-      }
-      .card-preview-diagram img {
-        object-position: center;
-      }
-      .card-preview img.photo-preview {
-        object-fit: cover;
-        object-position: center 68%;
-      }
-      .card-body {
-        padding: 10px 12px 12px;
-      }
-      .card-title-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 6px;
-      }
-      .card-title {
-        flex: 1;
-        font-size: 20px;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-        line-height: 1.3;
-      }
-      .card-icons {
-        display: flex;
-        flex-shrink: 0;
-        gap: 10px;
-      }
-      .card-icons a {
-        color: #7a7a7a;
-        transition: color 0.15s;
-        display: flex;
-        align-items: center;
-      }
-      .card-icons a:hover {
-        color: #111;
-      }
-      .card-icons svg {
-        width: 17px;
-        height: 17px;
-      }
-      .card-desc {
-        font-size: 14px;
-        color: #3f3f3f;
-        line-height: 1.6;
-      }
-      .card-meta {
-        font-size: 12px;
-        color: #777;
-        margin-top: 6px;
-      }
-      .icon-links {
-        display: flex;
-        gap: 14px;
-      }
-      .icon-links a {
-        color: #3f3f3f;
-        display: flex;
-        align-items: center;
-        transition: color 0.15s;
-      }
-      .icon-links a:hover {
-        color: #111;
-      }
-      .icon-links svg {
-        width: 18px;
-        height: 18px;
-      }
-      .footer-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 32px;
-      }
-      .copyright {
-        color: #6f6f6f;
-        font-size: 12px;
-        font-family: inherit;
-      }
-      body.dark {
-        background: #111;
-        color: #eee;
-      }
-      body.dark a {
-        color: #eee;
-      }
-      body.dark a:hover {
-        color: #888;
-      }
-      body.dark .seg {
-        border-color: #333;
-      }
-      body.dark .seg-btn {
-        color: #666;
-        border-left-color: #333;
-      }
-      body.dark .seg-btn:hover {
-        color: #eee;
-        background: #1e1e1e;
-      }
-      body.dark .seg-btn.active {
-        color: #eee;
-        background: #202020;
-      }
-      body.dark .card {
-        background: #191919;
-        border-color: #2b2b2b;
-        box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.55);
-      }
-      body.dark .card:hover {
-        border-color: #434343;
-        box-shadow: 0 14px 28px -8px rgba(0, 0, 0, 0.7);
-      }
-      body.dark .card-preview {
-        background: #1a1a18;
-      }
-      body.dark .card-desc {
-        color: #999;
-      }
-      body.dark .card-icons a {
-        color: #444;
-      }
-      body.dark .card-icons a:hover {
-        color: #eee;
-      }
-      body.dark .card-meta {
-        color: #555;
-      }
-    </style>
+    <link rel="preload" href="./assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./assets/fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./theme.js"></script>
   </head>
-  <body>
-    <div class="top-row">
-      <h1>see my projects here.</h1>
-      <div class="seg">
-        <a href="./index.html" class="seg-btn">home</a>
-        <a href="./projects.html" class="seg-btn active">projects</a>
-
+  <body class="wide">
+    <header class="top-row">
+      <h1 class="name">see my projects here.</h1>
+      <nav class="seg" aria-label="Site">
+        <a class="seg-btn" href="./index.html">home</a>
+        <a class="seg-btn active" aria-current="page" href="./projects.html">projects</a>
         <button
           class="seg-btn theme-toggle"
+          type="button"
           onclick="toggleDark()"
           id="tog"
           aria-label="Toggle theme"
           title="Toggle theme"
-        >
-          ☾
-        </button>
-      </div>
-    </div>
+        ></button>
+      </nav>
+    </header>
 
     <div class="cards">
-      <div class="card">
-        <div class="card-preview card-preview-diagram">
+      <div class="card" data-rarity="legendary">
+        <div class="card-preview card-preview-diagram px">
           <img
             src="./assets/utmist-logo.png"
             alt="UTMIST logo"
           />
         </div>
         <div class="card-body">
+          <div class="rarity">legendary</div>
           <div class="card-title-row">
             <div class="card-title">
               Deep Neural Networks for Learning Intent from sEMG Signals
@@ -353,8 +91,8 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-preview">
+      <div class="card" data-rarity="epic">
+        <div class="card-preview px">
           <img
             class="photo-preview"
             src="./assets/starglazers.jpeg"
@@ -362,6 +100,7 @@
           />
         </div>
         <div class="card-body">
+          <div class="rarity">epic</div>
           <div class="card-title-row">
             <div class="card-title">Starglazers - 2nd @ Ignition Hacks 2026</div>
             <div class="card-icons">
@@ -402,14 +141,15 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-preview card-preview-waveform">
+      <div class="card" data-rarity="rare">
+        <div class="card-preview card-preview-waveform px">
           <img
             src="./assets/s.png"
             alt="Sample EEG and EOG waveform visualization for the sleep stage classification project"
           />
         </div>
         <div class="card-body">
+          <div class="rarity">rare</div>
           <div class="card-title-row">
             <div class="card-title">Sleep Stage Classification</div>
             <div class="card-icons">
@@ -453,14 +193,15 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-preview card-preview-waveform">
+      <div class="card" data-rarity="rare">
+        <div class="card-preview card-preview-waveform px">
           <img
             src="./assets/m.png"
             alt="PCA-reduced and reconstructed fMRI connectivity matrix visualization for the personality prediction project"
           />
         </div>
         <div class="card-body">
+          <div class="rarity">rare</div>
           <div class="card-title-row">
             <div class="card-title">Personality Prediction from fMRI</div>
             <div class="card-icons">
@@ -504,8 +245,8 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-preview">
+      <div class="card" data-rarity="uncommon">
+        <div class="card-preview px">
           <img
             class="photo-preview"
             src="./assets/c.jpeg"
@@ -513,6 +254,7 @@
           />
         </div>
         <div class="card-body">
+          <div class="rarity">uncommon</div>
           <div class="card-title-row">
             <div class="card-title">DevLift</div>
             <div class="card-icons">
@@ -550,8 +292,8 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-preview">
+      <div class="card" data-rarity="epic">
+        <div class="card-preview px">
           <img
             class="photo-preview"
             src="./assets/b.jpeg"
@@ -559,6 +301,7 @@
           />
         </div>
         <div class="card-body">
+          <div class="rarity">epic</div>
           <div class="card-title-row">
             <div class="card-title">Verbatim - 2nd @ Hack Without Borders 2026</div>
             <div class="card-icons">
@@ -596,7 +339,7 @@
       </div>
     </div>
 
-    <div class="footer-row">
+    <footer class="footer-row">
       <div class="icon-links">
         <a href="https://github.com/karnamgyal" target="_blank" title="GitHub">
           <svg
@@ -660,288 +403,7 @@
         </a>
       </div>
       <div class="copyright">&copy; Karma Namgyal</div>
-    </div>
+    </footer>
 
-    <script>
-      const THEME_KEY = "karma-theme";
-      function syncThemeToggle() {
-        const toggle = document.getElementById("tog");
-        const isDark = document.body.classList.contains("dark");
-        toggle.textContent = isDark ? "☀" : "☾";
-        toggle.setAttribute(
-          "aria-label",
-          isDark ? "Switch to light mode" : "Switch to dark mode",
-        );
-        toggle.setAttribute(
-          "title",
-          isDark ? "Switch to light mode" : "Switch to dark mode",
-        );
-      }
-      function applySavedTheme() {
-        if (localStorage.getItem(THEME_KEY) === "dark")
-          document.body.classList.add("dark");
-        syncThemeToggle();
-      }
-      function toggleDark() {
-        document.body.classList.toggle("dark");
-        localStorage.setItem(
-          THEME_KEY,
-          document.body.classList.contains("dark") ? "dark" : "light",
-        );
-        syncThemeToggle();
-      }
-      function dk() {
-        return document.body.classList.contains("dark");
-      }
-      function fit(c) {
-        const p = c.parentElement;
-        c.width = p.offsetWidth;
-        c.height = p.offsetHeight;
-      }
-
-      applySavedTheme();
-
-      let T = 0;
-
-      function drawEEG(c, t) {
-        fit(c);
-        const ctx = c.getContext("2d"),
-          W = c.width,
-          H = c.height;
-        ctx.fillStyle = dk() ? "#1a1a18" : "#f7f7f5";
-        ctx.fillRect(0, 0, W, H);
-        const cols = dk()
-          ? ["#c8a060", "#5a9e8a", "#b06070", "#6080b0", "#9878c0"]
-          : ["#b8903a", "#2d6e6b", "#a04858", "#4060a0", "#7858a8"];
-        const n = cols.length,
-          lh = H / n;
-        cols.forEach((col, i) => {
-          const cy = (i + 0.5) * lh;
-          ctx.beginPath();
-          for (let x = 0; x <= W; x += 1.5) {
-            const p = x / W,
-              y =
-                cy +
-                Math.sin(p * 30 + t + i * 1.3) * lh * 0.2 +
-                Math.sin(p * 11 + t * 0.6 + i * 0.8) * lh * 0.09;
-            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-          }
-          ctx.strokeStyle = col;
-          ctx.lineWidth = 1.5;
-          ctx.globalAlpha = 0.75;
-          ctx.stroke();
-          ctx.globalAlpha = 1;
-          ctx.fillStyle = col + "99";
-          ctx.font = "9px system-ui";
-          ctx.fillText(["EEG-F", "EEG-C", "EMG", "EOG", "SPO2"][i], 8, cy - 5);
-        });
-      }
-
-      function drawFMRI(c, t) {
-        fit(c);
-        const ctx = c.getContext("2d"),
-          W = c.width,
-          H = c.height;
-        ctx.fillStyle = dk() ? "#1a1a18" : "#f7f7f5";
-        ctx.fillRect(0, 0, W, H);
-        const N = 9,
-          pad = 20,
-          cw = (W - pad * 2) / N,
-          ch = (H - pad * 2) / N;
-        for (let i = 0; i < N; i++)
-          for (let j = 0; j < N; j++) {
-            const base =
-              i === j ? 1 : Math.abs(Math.sin(i * 2.4 + j * 1.8)) * 0.85;
-            const v = base * (0.8 + Math.sin(t + i * 0.7 + j * 0.5) * 0.2);
-            ctx.fillStyle = dk()
-              ? `rgba(${Math.round(20 + v * 160)},${Math.round(20 + v * 90)},${Math.round(20 + v * 55)},1)`
-              : `rgba(${Math.round(226 - v * 130)},${Math.round(210 - v * 90)},${Math.round(200 - v * 80)},1)`;
-            ctx.fillRect(
-              pad + j * cw + 0.5,
-              pad + i * ch + 0.5,
-              cw - 2,
-              ch - 2,
-            );
-          }
-        const lbs = [
-          "PFC",
-          "M1",
-          "PMC",
-          "PPC",
-          "V1",
-          "HPC",
-          "AMG",
-          "INS",
-          "CB",
-        ];
-        ctx.fillStyle = dk() ? "rgba(155,149,144,0.55)" : "rgba(80,75,70,0.55)";
-        ctx.font = "7px system-ui";
-        lbs.forEach((l, i) => ctx.fillText(l, pad + i * cw + 2, pad - 3));
-      }
-
-      function drawDevLift(c, t) {
-        fit(c);
-        const ctx = c.getContext("2d"),
-          W = c.width,
-          H = c.height;
-        ctx.fillStyle = dk() ? "#1a1a18" : "#f7f7f5";
-        ctx.fillRect(0, 0, W, H);
-        const cx = W / 2,
-          floor = H * 0.78,
-          lift = Math.abs(Math.sin(t * 1.1)) * 14,
-          strain = Math.sin(t * 1.1) > 0.7;
-        const barY = floor - 54 - lift,
-          barLen = W * 0.38;
-        const col = dk() ? "rgba(220,215,205,0.75)" : "rgba(60,55,50,0.75)";
-        const col2 = dk() ? "rgba(220,215,205,0.5)" : "rgba(60,55,50,0.5)";
-        ctx.fillStyle = col;
-        ctx.fillRect(cx - barLen / 2, barY - 3, barLen, 6);
-        ctx.fillStyle = col2;
-        [
-          [cx - barLen / 2 + 6, barY],
-          [cx - barLen / 2 + 14, barY],
-          [cx + barLen / 2 - 6, barY],
-          [cx + barLen / 2 - 14, barY],
-        ].forEach(([x, y]) => {
-          ctx.beginPath();
-          ctx.ellipse(x, y, 6, 14, 0, 0, Math.PI * 2);
-          ctx.fill();
-        });
-        ctx.strokeStyle = col;
-        ctx.lineWidth = 5;
-        ctx.lineCap = "round";
-        ctx.beginPath();
-        ctx.moveTo(cx - 14, floor - 28);
-        ctx.lineTo(cx - barLen / 2 + 10, barY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(cx + 14, floor - 28);
-        ctx.lineTo(cx + barLen / 2 - 10, barY);
-        ctx.stroke();
-        ctx.fillStyle = col;
-        ctx.beginPath();
-        ctx.roundRect(cx - 13, floor - 44, 26, 22, 4);
-        ctx.fill();
-        ctx.lineWidth = 6;
-        ctx.beginPath();
-        ctx.moveTo(cx - 7, floor - 22);
-        ctx.lineTo(cx - 10, floor);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(cx + 7, floor - 22);
-        ctx.lineTo(cx + 10, floor);
-        ctx.stroke();
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        ctx.moveTo(cx - 10, floor);
-        ctx.lineTo(cx - 18, floor);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(cx + 10, floor);
-        ctx.lineTo(cx + 18, floor);
-        ctx.stroke();
-        const headY = floor - 58;
-        ctx.fillStyle = col;
-        ctx.beginPath();
-        ctx.arc(cx, headY, 12, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = dk() ? "#1a1a18" : "#f7f7f5";
-        ctx.font = `bold ${strain ? 11 : 10}px system-ui`;
-        ctx.textAlign = "center";
-        ctx.fillText(strain ? ">_<" : "^_^", cx, headY + 4);
-        const lapW = 36,
-          lapH = 22,
-          lapX = cx - 18,
-          lapY = floor - 18;
-        ctx.fillStyle = "rgba(42,100,96,0.15)";
-        ctx.beginPath();
-        ctx.roundRect(lapX, lapY, lapW, lapH, 2);
-        ctx.fill();
-        ctx.strokeStyle = "rgba(42,100,96,0.3)";
-        ctx.lineWidth = 1;
-        ctx.strokeRect(lapX, lapY, lapW, lapH);
-        ctx.fillStyle = "rgba(42,100,96,0.5)";
-        [0, 1, 2].forEach((i) => {
-          ctx.fillRect(lapX + 4, lapY + 5 + i * 5, i === 1 ? 16 : 22, 2);
-        });
-        ctx.strokeStyle = dk()
-          ? "rgba(255,255,255,0.08)"
-          : "rgba(60,55,50,0.12)";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(W * 0.1, floor + 4);
-        ctx.lineTo(W * 0.9, floor + 4);
-        ctx.stroke();
-        ctx.textAlign = "left";
-      }
-
-      function drawVerbatim(c, t) {
-        fit(c);
-        const ctx = c.getContext("2d"),
-          W = c.width,
-          H = c.height;
-        ctx.fillStyle = dk() ? "#1a1a18" : "#f7f7f5";
-        ctx.fillRect(0, 0, W, H);
-        const fx = W * 0.12,
-          fy = H * 0.12,
-          fw = W * 0.76,
-          fh = H * 0.65;
-        ctx.strokeStyle = dk() ? "rgba(42,100,96,0.45)" : "rgba(42,100,96,0.3)";
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(fx, fy, fw, fh);
-        const cs = 10;
-        [
-          [fx, fy],
-          [fx + fw, fy],
-          [fx, fy + fh],
-          [fx + fw, fy + fh],
-        ].forEach(([x, y], i) => {
-          ctx.strokeStyle = dk()
-            ? "rgba(180,140,60,0.85)"
-            : "rgba(138,96,32,0.65)";
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(x + (i % 2 === 0 ? 0 : -cs), y);
-          ctx.lineTo(x + (i % 2 === 0 ? cs : -cs), y);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(x, y + (i < 2 ? 0 : -cs));
-          ctx.lineTo(x, y + (i < 2 ? cs : -cs));
-          ctx.stroke();
-        });
-        const scanY = fy + ((t * 40) % fh);
-        const g = ctx.createLinearGradient(fx, scanY - 6, fx, scanY + 6);
-        const sc = dk() ? "rgba(180,140,60," : "rgba(138,96,32,";
-        g.addColorStop(0, sc + "0)");
-        g.addColorStop(0.5, sc + ".2)");
-        g.addColorStop(1, sc + "0)");
-        ctx.fillStyle = g;
-        ctx.fillRect(fx, scanY - 6, fw, 12);
-        const lines = ["The quick brown fox", "jumped over the", "lazy dog."];
-        ctx.font = "11px system-ui";
-        lines.forEach((line, i) => {
-          const ly = fy + fh * 0.25 + i * 18,
-            hl = Math.abs(scanY - ly) < 12;
-          ctx.fillStyle = hl
-            ? dk()
-              ? "rgba(180,140,60,0.95)"
-              : "rgba(138,96,32,0.85)"
-            : dk()
-              ? "rgba(230,225,215,0.52)"
-              : "rgba(60,55,50,0.25)";
-          ctx.fillText(line, fx + 10, ly);
-        });
-        ctx.fillStyle = dk() ? "rgba(210,205,195,0.7)" : "rgba(60,55,50,0.3)";
-        ctx.font = "9px system-ui";
-        ctx.textAlign = "center";
-        ctx.fillText("reading text aloud in real time", W / 2, fy + fh + 16);
-        ctx.textAlign = "left";
-      }
-
-      (function loop() {
-        T += 0.022;
-        requestAnimationFrame(loop);
-      })();
-    </script>
   </body>
 </html>

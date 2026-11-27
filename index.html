@@ -3,264 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./favicon-star.svg" type="image/svg+xml" />
     <title>Karma Namgyal</title>
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        background: #fff;
-        color: #111;
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-        font-size: 15.75px;
-        line-height: 1.75;
-        max-width: 628px;
-        margin: 0 auto;
-        padding: 84px 26px;
-      }
-      a {
-        color: #111;
-        text-underline-offset: 3px;
-      }
-      a:hover {
-        color: #555;
-      }
-      h1 {
-        font-size: 15px;
-        font-weight: 600;
-        margin-bottom: 20px;
-      }
-      .intro {
-        color: #252525;
-        margin-bottom: 6px;
-      }
-      .hero {
-        display: grid;
-        grid-template-columns: 1fr 168px;
-        gap: 32px;
-        align-items: start;
-      }
-      .profile-photo-link {
-        display: block;
-      }
-      .profile-photo {
-        display: block;
-        width: 168px;
-        aspect-ratio: 1;
-        border-radius: 8px;
-        object-fit: cover;
-        filter: grayscale(100%);
-      }
-      .profile-photo-link:hover .profile-photo {
-        filter: grayscale(60%);
-      }
-      .block {
-        margin-top: 32px;
-      }
-      .label {
-        font-weight: 600;
-        margin-bottom: 8px;
-        font-size: 15px;
-      }
-      ul {
-        list-style: none;
-        padding: 0;
-      }
-      ul li {
-        color: #252525;
-        margin-bottom: 4px;
-        padding-left: 14px;
-        position: relative;
-      }
-      ul li::before {
-        content: "—";
-        position: absolute;
-        left: 0;
-        color: #8f8f8f;
-      }
-      .muted {
-        color: #707070;
-        font-size: 13px;
-        margin-top: 4px;
-      }
-      .icon-links {
-        display: flex;
-        gap: 14px;
-        margin-top: 8px;
-      }
-      .icon-links a {
-        color: #3f3f3f;
-        display: flex;
-        align-items: center;
-        transition: color 0.15s;
-      }
-      .icon-links a:hover {
-        color: #111;
-      }
-            .icon-links svg {
-        width: 18px;
-        height: 18px;
-      }
-      .footer-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 32px;
-      }
-      .footer-row .icon-links {
-        margin-top: 0;
-      }
-      .copyright {
-        color: #6f6f6f;
-        font-size: 12px;
-        font-family: inherit;
-      }
-
-      body.dark {
-        background: #111;
-        color: #eee;
-      }
-      body.dark a {
-        color: #eee;
-      }
-      body.dark a:hover {
-        color: #888;
-      }
-      body.dark .intro {
-        color: #bbb;
-      }
-      body.dark .profile-photo {
-        opacity: 0.88;
-      }
-      body.dark ul li {
-        color: #bbb;
-      }
-      body.dark ul li::before {
-        color: #444;
-      }
-      body.dark .muted {
-        color: #666;
-      }
-      body.dark .label {
-        color: #eee;
-      }
-      body.dark .icon-links a {
-        color: #888;
-      }
-      body.dark .icon-links a:hover {
-        color: #eee;
-      }
-      .top-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 20px;
-      }
-      .top-row h1 {
-        margin-bottom: 0;
-      }
-      .seg {
-        display: flex;
-        border: 1px solid #ddd;
-        border-radius: 100px;
-        overflow: hidden;
-      }
-      .seg-btn {
-        background: none;
-        border: none;
-        border-left: 1px solid #ddd;
-        padding: 4px 14px;
-        font-size: 12px;
-        color: #888;
-        cursor: pointer;
-        font-family: inherit;
-        transition: all 0.15s;
-        text-decoration: none;
-        display: inline-block;
-        white-space: nowrap;
-      }
-      .seg-btn:first-child {
-        border-left: none;
-      }
-      .seg-btn:hover {
-        color: #111;
-        background: #f5f5f5;
-      }
-      .seg-btn.active {
-        color: #111;
-        background: #f3f3f3;
-      }
-      .theme-toggle {
-        min-width: 40px;
-        text-align: center;
-        font-size: 14px;
-      }
-      body.dark .top-row .seg {
-        border-color: #333;
-      }
-      body.dark .top-row .seg-btn {
-        color: #666;
-        border-left-color: #333;
-      }
-      body.dark .top-row .seg-btn:hover {
-        color: #eee;
-        background: #1e1e1e;
-      }
-      body.dark .top-row .seg-btn.active {
-        color: #eee;
-        background: #202020;
-      }
-      @media (max-width: 560px) {
-        .hero {
-          grid-template-columns: 1fr;
-          gap: 18px;
-        }
-        .profile-photo {
-          width: 132px;
-        }
-      }
-</style>
+    <link rel="icon" href="./favicon-star.svg" type="image/svg+xml" />
+    <link rel="preload" href="./assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./assets/fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./theme.js"></script>
   </head>
   <body>
-    <div class="top-row">
-      <h1>hi, I'm Karma.</h1>
-      <div class="seg">
-        <a class="seg-btn active" href="./index.html">home</a>
+    <header class="top-row">
+      <h1 class="name">hi, I'm Karma.</h1>
+      <nav class="seg" aria-label="Site">
+        <a class="seg-btn active" aria-current="page" href="./index.html">home</a>
         <a class="seg-btn" href="./projects.html">projects</a>
-
         <button
           class="seg-btn theme-toggle"
+          type="button"
           onclick="toggleDark()"
           id="tog"
           aria-label="Toggle theme"
           title="Toggle theme"
-        >
-          ☾
-        </button>
-      </div>
-    </div>
+        ></button>
+      </nav>
+    </header>
 
     <div class="hero">
-      <ul class="intro">
+      <ul class="dash-list">
         <li>
-          I'm an ECE student who's really into machine learning systems and using
-          AI to build cool stuff.
+          I'm an ECE student who's really into machine learning systems and
+          using AI to build cool stuff.
         </li>
         <li>
           I play competitive Ultimate Frisbee for both university and club.
         </li>
-          <li>
-          Currently looking for 12/16 month PEY internships that start May 2027.
+        <li>
+          Currently looking for 12/16 month PEY internships that start May
+          2027.
         </li>
       </ul>
       <a
-        class="profile-photo-link"
+        class="profile-photo-link px"
         href="https://kcnhub.com/members/research-personnel#undergraduates"
         target="_blank"
         rel="noopener noreferrer"
@@ -274,41 +56,63 @@
       </a>
     </div>
 
-    <div class="block">
-      <div class="label">current</div>
-      <ul>
-        <li>
-          ML Researcher @ <a href="https://kcnhub.com" target="_blank"
-            >Krembil Brain Institute</a
-          >
-          <div class="muted">
-            May 2026 - Present; Deep learning to encode multi-site MER data from DBS for downstream tasks
+    <section class="block">
+      <h2 class="label">current<span class="count">2</span></h2>
+      <ul class="rows">
+        <li class="row">
+          <div class="row-head">
+            <span class="row-title"
+              >ML Researcher @
+              <a href="https://kcnhub.com" target="_blank" rel="noopener"
+                >Krembil Brain Institute</a
+              ></span
+            >
+            <span class="row-date">May 2026 – Present</span>
           </div>
+          <p class="row-desc">
+            Deep learning to encode multi-site MER data from DBS for downstream
+            tasks
+          </p>
         </li>
-        <li>
-          ML Engineer @ <a href="https://utmist.ca" target="_blank">UTMIST</a>
-          <div class="muted">
-            Sep 2025 - Aug 2026; R&D ML pipelines to support post-stroke rehabilitation hardware
+        <li class="row">
+          <div class="row-head">
+            <span class="row-title"
+              >ML Engineer @
+              <a href="https://utmist.ca" target="_blank" rel="noopener"
+                >UTMIST</a
+              ></span
+            >
+            <span class="row-date">Sep 2025 – Aug 2026</span>
           </div>
+          <p class="row-desc">
+            R&amp;D ML pipelines to support post-stroke rehabilitation hardware
+          </p>
         </li>
       </ul>
-    </div>
-    <div class="block">
-      <div class="label">education</div>
-      <ul>
-        <li>
-          BASc Computer Engineering + PEY Co-op —
-          <a href="https://www.utoronto.ca" target="_blank"
-            >University of Toronto</a
-          >
-          <div class="muted">2024 – 2029</div>
-        </li>
-      </ul>
-    </div>
+    </section>
 
-        <div class="block footer-row">
+    <section class="block">
+      <h2 class="label">education<span class="count">1</span></h2>
+      <ul class="rows">
+        <li class="row">
+          <div class="row-head">
+            <span class="row-title"
+              >BASc Computer Engineering + PEY Co-op</span
+            >
+            <span class="row-date">2024 – 2029</span>
+          </div>
+          <p class="row-desc">
+            <a href="https://www.utoronto.ca" target="_blank" rel="noopener"
+              >University of Toronto</a
+            >
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="footer-row">
       <div class="icon-links">
-        <a href="https://github.com/karnamgyal" target="_blank" title="GitHub">
+        <a href="https://github.com/karnamgyal" target="_blank" title="GitHub" aria-label="GitHub">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -326,6 +130,7 @@
           href="https://linkedin.com/in/karma-namgyal"
           target="_blank"
           title="LinkedIn"
+          aria-label="LinkedIn"
         >
           <svg
             viewBox="0 0 24 24"
@@ -346,6 +151,7 @@
           href="https://scholar.google.com/citations?user=h6iZ-vYAAAAJ&hl=en&authuser=1"
           target="_blank"
           title="Google Scholar"
+          aria-label="Google Scholar"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
             <path
@@ -357,6 +163,7 @@
           href="https://devpost.com/karnamgyal"
           target="_blank"
           title="Devpost"
+          aria-label="Devpost"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
             <path
@@ -364,7 +171,7 @@
             />
           </svg>
         </a>
-        <a href="mailto:karma.namgyal@mail.utoronto.ca" title="Email">
+        <a href="mailto:karma.namgyal@mail.utoronto.ca" title="Email" aria-label="Email">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -381,41 +188,6 @@
         </a>
       </div>
       <div class="copyright">&copy; Karma Namgyal</div>
-    </div>
-
-    <script>
-      const THEME_KEY = "karma-theme";
-
-      function syncThemeToggle() {
-        const toggle = document.getElementById("tog");
-        const isDark = document.body.classList.contains("dark");
-        toggle.textContent = isDark ? "☀" : "☾";
-        toggle.setAttribute(
-          "aria-label",
-          isDark ? "Switch to light mode" : "Switch to dark mode",
-        );
-        toggle.setAttribute(
-          "title",
-          isDark ? "Switch to light mode" : "Switch to dark mode",
-        );
-      }
-
-      function applySavedTheme() {
-        if (localStorage.getItem(THEME_KEY) === "dark") {
-          document.body.classList.add("dark");
-        }
-        syncThemeToggle();
-      }
-
-      function toggleDark() {
-        document.body.classList.toggle("dark");
-        localStorage.setItem(
-          THEME_KEY,
-          document.body.classList.contains("dark") ? "dark" : "light",
-        );
-        syncThemeToggle();
-      }
-
-      applySavedTheme();
-    </script>  </body>
+    </footer>
+  </body>
 </html>
