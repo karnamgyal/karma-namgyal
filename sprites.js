@@ -1,4 +1,4 @@
-// Little elemental critters wandering behind the page.
+// Little elemental critters (and a pup) wandering behind the page.
 (function () {
   // ------------------------------------------------------------------
   // Use your own sprite images:
@@ -19,6 +19,8 @@
     m: "#a58a6a", M: "#7d6448", L: "#d1bea3", n: "#5cc46a", // pebble
     v: "#eef0ff", V: "#c3c8f0",                // ghost
     a: "#f4fbff", A: "#c9e6f7",                // cloud
+    h: "#e8c38f", H: "#c99a5b", j: "#8a5a35", // pup coat
+    f: "#fbe8c8", q: "#ff6f91",                // pup muzzle, tongue
   };
 
   var CRITTERS = {
@@ -149,6 +151,49 @@
         "....k......k....",
       ],
     },
+    pup: {
+      skin: "h",
+      walk: [
+        [
+          "......................",
+          "......................",
+          ".............kkkkk....",
+          "..k.........khhhhhk...",
+          ".khk........khhhhhhk..",
+          ".khk.......khjjhehhkk.",
+          ".khhk.kkkkkkhjjhdhfffd",
+          ".khhkkjjjhhhccjhhpfffk",
+          ".khkhjjjjjhhccjhhffffk",
+          "..khhhjjjhhhccjhhkdqk.",
+          "..khhhhhhhhhcchkk..q..",
+          "..khhhhhhhhhhhhhk.....",
+          "...khhHHHHHhhHHHk.....",
+          "...khhkHHHHhhkHHk.....",
+          "...khhkkHkkhhkHHk.....",
+          "...khhkkHkkhhkHHk.....",
+          "....kk..k..kk.kk......",
+        ],
+        [
+          "......................",
+          "......................",
+          ".............kkkkk....",
+          "...k........khhhhhk...",
+          "..khk.......khhhhhhk..",
+          ".khhk......khjjhehhkk.",
+          ".khhk.kkkkkkhjjhdhfffd",
+          "..khkkjjjhhhccjhhpfffk",
+          "...khjjjjjhhccjhhffffk",
+          "..khhhjjjhhhccjhhkdqk.",
+          "..khhhhhhhhhcchkk..q..",
+          "..khhhhhhhhhhhhk......",
+          "...kHhhHHHHHhHHk......",
+          "....khhHHHHkhHHk......",
+          "....khhHkkkkhHHk......",
+          "....khhHk..khHHk......",
+          ".....kkk....kkk.......",
+        ],
+      ],
+    },
   };
 
   var root = document.documentElement;
@@ -209,9 +254,18 @@
     var out = [];
     for (var name in CRITTERS) {
       var cr = CRITTERS[name];
-      var blink = cr.rows.map(function (r) { return r.split("e").join(cr.skin); });
-      var open = bake(cr.rows, px * dpr), shut = bake(blink, px * dpr);
-      out.push({ frames: [open, shut], w: open.width / dpr, h: open.height / dpr });
+      var poses = cr.walk || [cr.rows];
+      var frames = [];
+      poses.forEach(function (rows) {
+        var blink = rows.map(function (r) { return r.split("e").join(cr.skin); });
+        frames.push(bake(rows, px * dpr), bake(blink, px * dpr));
+      });
+      out.push({
+        frames: frames,
+        walker: !!cr.walk,
+        w: frames[0].width / dpr,
+        h: frames[0].height / dpr,
+      });
     }
     done(out);
   }
@@ -249,7 +303,9 @@
   function populate() {
     if (!kinds.length) return;
     var n = Math.max(5, Math.min(11, Math.round((W * H) / 120000)));
-    var order = kinds.slice().sort(function () { return Math.random() - 0.5; });
+    var order = kinds.slice().sort(function (a, b) {
+      return (b.walker ? 1 : 0) - (a.walker ? 1 : 0) || Math.random() - 0.5;
+    });
     sprites = [];
     for (var i = 0; i < n; i++) sprites.push(makeSprite(order[i % order.length], i, n));
   }
@@ -273,7 +329,7 @@
       // wander: the heading takes a slow random walk
       s.heading += Math.sin(s.t * s.turn + s.phase) * 0.9 * dt + rand(-0.6, 0.6) * dt;
       var vx = Math.cos(s.heading) * s.speed;
-      var vy = Math.sin(s.heading) * s.speed * 0.6;
+      var vy = Math.sin(s.heading) * s.speed * (s.kind.walker ? 0.25 : 0.6);
 
       // shy: scoot away from the cursor
       var dx = s.x - mouse.x, dy = s.y - mouse.y, dist = Math.sqrt(dx * dx + dy * dy);
@@ -316,8 +372,12 @@
     ctx.imageSmoothingEnabled = !!CUSTOM_IMAGES.length;
     for (var i = 0; i < sprites.length; i++) {
       var s = sprites[i], k = s.kind;
-      var img = k.frames[s.blinkT > 0 && k.frames[1] ? 1 : 0];
-      var bob = Math.sin(s.t * 2.2 + s.phase) * 3;
+      var blinking = s.blinkT > 0 && k.frames.length > 1 ? 1 : 0;
+      var pose = k.walker ? (Math.floor(s.t * 6) % 2) * 2 : 0;
+      var img = k.frames[pose + blinking];
+      var bob = k.walker
+        ? -Math.abs(Math.sin(s.t * 9.4)) * 1.5
+        : Math.sin(s.t * 2.2 + s.phase) * 3;
       var hop = 0, sx = 1, sy = 1;
       if (s.hopT >= 0) {
         var p = s.hopT / 0.55;
