@@ -29,12 +29,6 @@
   --line: #e6e6e3;
   --hover: #f1f1ef;
 
-  /* loot-rarity accents (light) */
-  --common: #6f6f6f;
-  --uncommon: #2b8a3e;
-  --rare: #1971c2;
-  --epic: #8b3fc4;
-  --legendary: #c2510c;
 
   --sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
     sans-serif;
@@ -195,7 +189,16 @@ a:hover {
   display: block;
   width: 100%;
   aspect-ratio: 1;
+  border-radius: 8px;
   object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.2s;
+}
+.profile-photo-link:hover .profile-photo {
+  filter: grayscale(60%);
+}
+:root.dark .profile-photo {
+  opacity: 0.88;
 }
 
 /* ---------- home: sections ---------- */
@@ -279,50 +282,6 @@ a:hover {
   font-size: 11.5px;
 }
 
-/* ---------- dot-matrix image treatment ----------
-   Images sit behind a fine dot screen in greyscale and come back to full
-   colour on hover. Touch screens get colour straight away. */
-.px {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.px img {
-  transition: filter 0.4s ease;
-}
-.px::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle at center,
-    transparent 0 0.75px,
-    var(--bg) 1.15px
-  );
-  background-size: 3px 3px;
-  opacity: 0.6;
-  transition: opacity 0.4s ease;
-}
-@media (hover: hover) {
-  .px img {
-    filter: grayscale(1) contrast(1.06);
-  }
-  .px:hover img,
-  .card:hover .px img {
-    filter: none;
-  }
-  .px:hover::after,
-  .card:hover .px::after {
-    opacity: 0;
-  }
-}
-@media (hover: none) {
-  .px::after {
-    opacity: 0.22;
-  }
-}
-
 /* ---------- projects: cards ---------- */
 .cards {
   display: flex;
@@ -330,44 +289,32 @@ a:hover {
   gap: 18px;
 }
 .card {
-  --rarity: var(--common);
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 2px rgba(17, 17, 17, 0.04),
-    0 6px 16px -8px rgba(17, 17, 17, 0.08);
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
-}
-.card[data-rarity="uncommon"] {
-  --rarity: var(--uncommon);
-}
-.card[data-rarity="rare"] {
-  --rarity: var(--rare);
-}
-.card[data-rarity="epic"] {
-  --rarity: var(--epic);
-}
-.card[data-rarity="legendary"] {
-  --rarity: var(--legendary);
+  box-shadow: 0 1px 2px rgba(17, 17, 17, 0.05),
+    0 8px 20px -6px rgba(17, 17, 17, 0.1);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 .card:hover {
+  border-color: var(--faint);
+  box-shadow: 0 2px 4px rgba(17, 17, 17, 0.06),
+    0 14px 28px -8px rgba(17, 17, 17, 0.16);
   transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--rarity) 55%, var(--line));
-  box-shadow: 0 1px 2px rgba(17, 17, 17, 0.05),
-    0 16px 32px -14px color-mix(in srgb, var(--rarity) 55%, transparent);
 }
 :root.dark .card {
-  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.55);
 }
 :root.dark .card:hover {
-  box-shadow: 0 16px 36px -14px color-mix(in srgb, var(--rarity) 45%, transparent);
+  box-shadow: 0 14px 28px -8px rgba(0, 0, 0, 0.7);
 }
 .card-preview {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   aspect-ratio: 2084 / 1181;
   background: var(--hover);
-  border-bottom: 2px solid var(--rarity);
 }
 .card-preview img {
   position: absolute;
@@ -390,25 +337,6 @@ a:hover {
 }
 .card-body {
   padding: 12px 14px 14px;
-}
-.rarity {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--pixel);
-  font-size: 11px;
-  line-height: 1;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--rarity);
-  margin-bottom: 8px;
-}
-.rarity::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  background: currentColor;
-  transform: rotate(45deg);
 }
 .card-title-row {
   display: flex;
