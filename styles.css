@@ -29,7 +29,6 @@
   --line: #e6e6e3;
   --hover: #f1f1ef;
 
-
   --sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
     sans-serif;
   --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -47,12 +46,6 @@
   --line: #242424;
   --hover: #1c1c1c;
 
-  --common: #a3a3a3;
-  --uncommon: #5fd068;
-  --rare: #52a8f2;
-  --epic: #c27dff;
-  --legendary: #ff9a3c;
-
   color-scheme: dark;
 }
 
@@ -69,7 +62,9 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
-  background: var(--bg);
+  /* transparent so the sprite canvas (z-index -1) shows through;
+     the page colour comes from html */
+  background: transparent;
   color: var(--fg);
   font-family: var(--sans);
   font-size: 15px;
@@ -375,6 +370,16 @@ a:hover {
   font-size: 14px;
   color: var(--muted);
   line-height: 1.6;
+}
+
+/* ---------- background sprites (drawn by sprites.js) ---------- */
+#bg-sprites {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* ---------- motion / small screens ---------- */
